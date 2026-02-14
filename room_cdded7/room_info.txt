@@ -1,0 +1,4 @@
+--- SECTOR ROOM_CDDED7 ---
+DEPTH: 14 | LVL: 2 | CORR: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

@@ -1,0 +1,4 @@
+--- SECTOR ROOM_50EF3B ---
+DEPTH: 61 | CORRUPTION: 50%
+A quiet, well-lit corridor.
+Status: Awaiting input...

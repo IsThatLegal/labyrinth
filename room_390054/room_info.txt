@@ -1,0 +1,4 @@
+--- SECTOR ROOM_390054 ---
+DEPTH: 53 | CORRUPTION: 45%
+A flickering doorway that defies geometry.
+Status: Awaiting input...

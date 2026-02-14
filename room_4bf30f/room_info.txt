@@ -1,0 +1,4 @@
+--- SECTOR ROOM_4BF30F ---
+DEPTH: 38 | CORRUPTION: 0%
+A flickering doorway that defies geometry.
+Status: Awaiting input...

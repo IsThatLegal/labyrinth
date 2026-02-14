@@ -1,0 +1,5 @@
+--- SECTOR ROOM_F733C9 ---
+DEPTH: 13 | CORRUPTION: 75%
+A flickering doorway that defies geometry.
+WARNING: Critical Corruption. System Purge imminent.
+Status: Awaiting input...

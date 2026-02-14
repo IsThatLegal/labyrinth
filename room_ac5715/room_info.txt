@@ -1,0 +1,4 @@
+--- SECTOR ROOM_AC5715 ---
+DEPTH: 35 | CORRUPTION: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

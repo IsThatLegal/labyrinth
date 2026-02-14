@@ -1,0 +1,4 @@
+--- SECTOR ROOM_302145 ---
+DEPTH: 14
+A vibrating passage filled with static.
+Status: Awaiting input...

@@ -1,0 +1,4 @@
+--- SECTOR ROOM_E0A840 ---
+DEPTH: 11 | CORRUPTION: 0%
+A vibrating passage filled with static.
+Status: Awaiting input...

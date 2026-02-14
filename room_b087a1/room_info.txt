@@ -1,0 +1,4 @@
+--- SECTOR ROOM_B087A1 ---
+DEPTH: 2 | LVL: 1 | CLASS: Novice
+A heavily reinforced blast door promising DEFENSE.
+Status: Awaiting input...

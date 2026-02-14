@@ -1,0 +1,4 @@
+--- SECTOR ROOM_7F8B8D ---
+DEPTH: 20 | LVL: 3 | CORR: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

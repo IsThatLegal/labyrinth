@@ -1,0 +1,4 @@
+--- SECTOR ROOM_E848A4 ---
+DEPTH: 63 | CORRUPTION: 65%
+A quiet, well-lit corridor.
+Status: Awaiting input...

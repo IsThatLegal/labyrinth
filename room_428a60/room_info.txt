@@ -1,0 +1,4 @@
+--- SECTOR ROOM_428A60 ---
+DEPTH: 31 | LVL: 5 | CLASS: SysAdmin (Tank)
+A heavily reinforced blast door promising DEFENSE.
+Status: Awaiting input...

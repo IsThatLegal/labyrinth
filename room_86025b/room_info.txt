@@ -1,0 +1,4 @@
+--- SECTOR ROOM_86025B ---
+DEPTH: 83 | CORRUPTION: 100%
+A quiet, well-lit corridor.
+Status: Awaiting input...

@@ -1,0 +1,4 @@
+--- SECTOR ROOM_3F9349 ---
+DEPTH: 67 | LVL: 5 | CORR: 0%
+A vibrating passage filled with static.
+Status: Awaiting input...

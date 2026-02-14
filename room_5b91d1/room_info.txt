@@ -1,0 +1,4 @@
+--- SECTOR ROOM_5B91D1 ---
+DEPTH: 77 | LVL: 6 | CORR: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

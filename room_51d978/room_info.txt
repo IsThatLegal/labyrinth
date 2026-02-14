@@ -1,0 +1,4 @@
+--- SECTOR ROOM_51D978 ---
+DEPTH: 4
+A vibrating passage filled with static.
+Status: Awaiting input...

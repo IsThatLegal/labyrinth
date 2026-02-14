@@ -1,0 +1,4 @@
+--- SECTOR ROOM_7EBAD1 ---
+DEPTH: 9 | CORRUPTION: 40%
+A quiet, well-lit corridor.
+Status: Awaiting input...

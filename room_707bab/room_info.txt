@@ -1,0 +1,4 @@
+--- SECTOR ROOM_707BAB ---
+DEPTH: 45 | CORRUPTION: 15%
+A quiet, well-lit corridor.
+Status: Awaiting input...

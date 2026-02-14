@@ -1,0 +1,4 @@
+--- SECTOR ROOM_D62482 ---
+DEPTH: 39 | LVL: 6 | CLASS: SysAdmin (Tank)
+A glitching, unstable rift promising AGILITY.
+Status: Awaiting input...

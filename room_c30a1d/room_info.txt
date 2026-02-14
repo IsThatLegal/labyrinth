@@ -1,0 +1,4 @@
+--- SECTOR ROOM_C30A1D ---
+DEPTH: 17
+A quiet, well-lit corridor.
+Status: Awaiting input...

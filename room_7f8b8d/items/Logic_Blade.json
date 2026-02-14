@@ -1,0 +1,7 @@
+{
+    "name": "Logic_Blade",
+    "type": "buff",
+    "stat": "atk",
+    "value": 2,
+    "desc": "+2 ATK"
+}

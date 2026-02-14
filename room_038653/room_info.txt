@@ -1,0 +1,4 @@
+--- SECTOR ROOM_038653 ---
+DEPTH: 7
+A quiet, well-lit corridor.
+Status: Awaiting input...

@@ -1,0 +1,4 @@
+--- SECTOR ROOM_4F00A0 ---
+DEPTH: 65 | LVL: 5 | CORR: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

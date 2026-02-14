@@ -1,0 +1,4 @@
+--- SECTOR ROOM_D28D07 ---
+DEPTH: 42 | CORRUPTION: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

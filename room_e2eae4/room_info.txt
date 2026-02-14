@@ -1,0 +1,4 @@
+--- SECTOR ROOM_E2EAE4 ---
+DEPTH: 32 | LVL: 6 | CLASS: SysAdmin (Tank)
+A heavily reinforced blast door promising DEFENSE.
+Status: Awaiting input...

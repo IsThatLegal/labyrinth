@@ -1,0 +1,4 @@
+--- SECTOR ROOM_B107C1 ---
+DEPTH: 20 | LVL: 2 | CORR: 0%
+A vibrating passage filled with static.
+Status: Awaiting input...

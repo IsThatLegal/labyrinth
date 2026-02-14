@@ -1,0 +1,4 @@
+--- SECTOR ROOM_070811 ---
+DEPTH: 52 | LVL: 7 | CLASS: SysAdmin (Tank)
+A pulsing data stream promising POWER.
+Status: Awaiting input...

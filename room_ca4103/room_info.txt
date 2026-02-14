@@ -1,0 +1,4 @@
+--- SECTOR ROOM_CA4103 ---
+DEPTH: 53 | CORRUPTION: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

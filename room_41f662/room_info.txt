@@ -1,0 +1,4 @@
+--- SECTOR ROOM_41F662 ---
+DEPTH: 67 | CORRUPTION: 55%
+A quiet, well-lit corridor.
+Status: Awaiting input...

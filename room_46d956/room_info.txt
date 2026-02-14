@@ -1,0 +1,4 @@
+--- SECTOR ROOM_46D956 ---
+DEPTH: 18 | LVL: 4 | CLASS: Novice
+A pulsing data stream promising POWER.
+Status: Awaiting input...

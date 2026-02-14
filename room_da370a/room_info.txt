@@ -1,0 +1,4 @@
+--- SECTOR ROOM_DA370A ---
+DEPTH: 33 | CORRUPTION: 0%
+A flickering doorway that defies geometry.
+Status: Awaiting input...

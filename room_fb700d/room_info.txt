@@ -1,0 +1,4 @@
+--- SECTOR ROOM_FB700D ---
+DEPTH: 24 | LVL: 4 | CLASS: SysAdmin (Tank)
+A pulsing data stream promising POWER.
+Status: Awaiting input...

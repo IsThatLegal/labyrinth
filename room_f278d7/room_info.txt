@@ -1,0 +1,4 @@
+--- SECTOR ROOM_F278D7 ---
+DEPTH: 15 | LVL: 2 | CORR: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

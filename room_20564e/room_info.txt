@@ -1,0 +1,4 @@
+--- SECTOR ROOM_20564E ---
+DEPTH: 2 | LVL: 1 | CLASS: Novice
+A glitching, unstable rift promising AGILITY.
+Status: Awaiting input...

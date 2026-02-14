@@ -1,0 +1,4 @@
+--- SECTOR ROOM_510A29 ---
+DEPTH: 16 | LVL: 2 | CORR: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

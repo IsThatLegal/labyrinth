@@ -1,0 +1,4 @@
+--- SECTOR ROOM_E1BCC3 ---
+DEPTH: 67 | CORRUPTION: 45%
+A flickering doorway that defies geometry.
+Status: Awaiting input...

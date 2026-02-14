@@ -1,0 +1,4 @@
+--- SECTOR ROOM_DA4771 ---
+DEPTH: 36 | LVL: 5 | CLASS: SysAdmin (Tank)
+A glitching, unstable rift promising AGILITY.
+Status: Awaiting input...

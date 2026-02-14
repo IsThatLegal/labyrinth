@@ -1,0 +1,5 @@
+--- SECTOR ROOM_DD21B2 ---
+RE-ENTRY DETECTED.
+DEPTH: 6 | LVL: 1 | CLASS: Novice
+A pulsing data stream promising POWER.
+Status: Awaiting input...

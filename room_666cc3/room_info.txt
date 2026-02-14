@@ -1,0 +1,4 @@
+--- SECTOR ROOM_666CC3 ---
+DEPTH: 49 | LVL: 4 | CORR: 0%
+A vibrating passage filled with static.
+Status: Awaiting input...

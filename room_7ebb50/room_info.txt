@@ -1,0 +1,4 @@
+--- SECTOR ROOM_7EBB50 ---
+DEPTH: 22
+A quiet, well-lit corridor.
+Status: Awaiting input...

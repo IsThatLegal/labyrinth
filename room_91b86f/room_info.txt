@@ -1,0 +1,4 @@
+--- SECTOR ROOM_91B86F ---
+DEPTH: 48 | CORRUPTION: 30%
+A vibrating passage filled with static.
+Status: Awaiting input...

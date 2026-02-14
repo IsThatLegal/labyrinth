@@ -1,0 +1,4 @@
+--- SECTOR ROOM_3A86AF ---
+DEPTH: 79 | CORRUPTION: 100%
+A quiet, well-lit corridor.
+Status: Awaiting input...

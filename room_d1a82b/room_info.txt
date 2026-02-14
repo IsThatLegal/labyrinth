@@ -1,0 +1,4 @@
+--- SECTOR ROOM_D1A82B ---
+DEPTH: 16 | LVL: 3 | CORR: 0%
+A vibrating passage filled with static.
+Status: Awaiting input...

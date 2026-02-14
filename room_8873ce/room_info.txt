@@ -1,0 +1,4 @@
+--- SECTOR ROOM_8873CE ---
+DEPTH: 12 | LVL: 3 | CLASS: SysAdmin (Tank)
+A glitching, unstable rift promising AGILITY.
+Status: Awaiting input...

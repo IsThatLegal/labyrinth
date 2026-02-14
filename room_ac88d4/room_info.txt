@@ -1,0 +1,4 @@
+--- SECTOR ROOM_AC88D4 ---
+DEPTH: 44 | LVL: 4 | CORR: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

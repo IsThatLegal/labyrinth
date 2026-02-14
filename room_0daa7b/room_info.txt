@@ -1,0 +1,4 @@
+--- SECTOR ROOM_0DAA7B ---
+DEPTH: 16 | LVL: 3 | CLASS: Novice
+A heavily reinforced blast door promising DEFENSE.
+Status: Awaiting input...

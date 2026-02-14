@@ -1,0 +1,4 @@
+--- ROOM ROOM_A10328 ---
+DEPTH: 1
+You are standing in a flicker-lit sector of the labyrinth.
+The walls are made of cold, humming server racks.

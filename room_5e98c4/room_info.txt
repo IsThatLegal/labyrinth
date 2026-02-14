@@ -1,0 +1,4 @@
+--- SECTOR ROOM_5E98C4 ---
+DEPTH: 20 | LVL: 4 | CLASS: Novice
+A pulsing data stream promising POWER.
+Status: Awaiting input...

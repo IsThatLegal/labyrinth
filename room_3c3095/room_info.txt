@@ -1,0 +1,4 @@
+--- SECTOR ROOM_3C3095 ---
+DEPTH: 46 | CORRUPTION: 15%
+A quiet, well-lit corridor.
+Status: Awaiting input...

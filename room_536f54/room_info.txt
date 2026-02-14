@@ -1,0 +1,4 @@
+--- SECTOR ROOM_536F54 ---
+DEPTH: 11 | LVL: 3 | CLASS: Novice
+A pulsing data stream promising POWER.
+Status: Awaiting input...

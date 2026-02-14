@@ -1,0 +1,4 @@
+--- SECTOR ROOM_D3FBAB ---
+DEPTH: 40 | LVL: 6 | CLASS: SysAdmin (Tank)
+A heavily reinforced blast door promising DEFENSE.
+Status: Awaiting input...

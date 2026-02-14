@@ -1,0 +1,4 @@
+--- SECTOR ROOM_EEF712 ---
+DEPTH: 56 | LVL: 8 | CLASS: SysAdmin (Tank)
+A heavily reinforced blast door promising DEFENSE.
+Status: Awaiting input...

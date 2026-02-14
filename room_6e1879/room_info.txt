@@ -1,0 +1,4 @@
+--- SECTOR ROOM_6E1879 ---
+DEPTH: 48 | LVL: 4 | CORR: 0%
+A flickering doorway that defies geometry.
+Status: Awaiting input...

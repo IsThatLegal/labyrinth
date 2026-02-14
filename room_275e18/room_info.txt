@@ -1,0 +1,4 @@
+--- SECTOR ROOM_275E18 ---
+DEPTH: 18 | LVL: 2 | CORR: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

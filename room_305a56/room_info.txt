@@ -1,0 +1,4 @@
+--- SECTOR ROOM_305A56 ---
+DEPTH: 11 | LVL: 1 | CORR: 0%
+A vibrating passage filled with static.
+Status: Awaiting input...

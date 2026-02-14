@@ -1,0 +1,4 @@
+--- SECTOR ROOM_F58974 ---
+DEPTH: 18 | LVL: 3 | CLASS: SysAdmin (Tank)
+A glitching, unstable rift promising AGILITY.
+Status: Awaiting input...

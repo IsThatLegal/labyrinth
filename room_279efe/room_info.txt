@@ -1,0 +1,4 @@
+--- SECTOR ROOM_279EFE ---
+DEPTH: 53 | LVL: 4 | CORR: 0%
+A flickering doorway that defies geometry.
+Status: Awaiting input...

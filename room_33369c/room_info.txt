@@ -1,0 +1,4 @@
+--- SECTOR ROOM_33369C ---
+DEPTH: 97 | LVL: 7 | CORR: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

@@ -1,0 +1,4 @@
+--- SECTOR ROOM_DAC773 ---
+DEPTH: 19
+A vibrating passage filled with static.
+Status: Awaiting input...

@@ -1,0 +1,4 @@
+--- SECTOR ROOM_5F457C ---
+DEPTH: 45 | LVL: 7 | CLASS: SysAdmin (Tank)
+A glitching, unstable rift promising AGILITY.
+Status: Awaiting input...

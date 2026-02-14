@@ -1,0 +1,4 @@
+--- SECTOR ROOM_0B373C ---
+DEPTH: 83 | LVL: 6 | CORR: 0%
+A flickering doorway that defies geometry.
+Status: Awaiting input...

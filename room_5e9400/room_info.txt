@@ -1,0 +1,4 @@
+--- SECTOR ROOM_5E9400 ---
+DEPTH: 35 | LVL: 6 | CLASS: SysAdmin (Tank)
+A glitching, unstable rift promising AGILITY.
+Status: Awaiting input...

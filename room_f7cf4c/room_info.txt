@@ -1,0 +1,4 @@
+--- SECTOR ROOM_F7CF4C ---
+DEPTH: 60 | CORRUPTION: 60%
+A vibrating passage filled with static.
+Status: Awaiting input...

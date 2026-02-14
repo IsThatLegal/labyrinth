@@ -1,0 +1,4 @@
+--- SECTOR ROOM_D8F999 ---
+DEPTH: 34 | CORRUPTION: 95%
+A quiet, well-lit corridor.
+Status: Awaiting input...

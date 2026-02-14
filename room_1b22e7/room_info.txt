@@ -1,0 +1,4 @@
+--- SECTOR ROOM_1B22E7 ---
+DEPTH: 57 | CORRUPTION: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

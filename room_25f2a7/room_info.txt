@@ -1,0 +1,4 @@
+--- SECTOR ROOM_25F2A7 ---
+DEPTH: 23
+A vibrating passage filled with static.
+Status: Awaiting input...

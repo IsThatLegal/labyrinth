@@ -1,0 +1,4 @@
+--- SECTOR ROOM_6EC50A ---
+DEPTH: 13 | LVL: 3 | CORR: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

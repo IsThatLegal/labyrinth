@@ -1,0 +1,4 @@
+--- SECTOR ROOM_8D5E57 ---
+DEPTH: 15
+A vibrating passage filled with static.
+Status: Awaiting input...

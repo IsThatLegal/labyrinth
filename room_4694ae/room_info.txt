@@ -1,0 +1,4 @@
+--- SECTOR ROOM_4694AE ---
+DEPTH: 41 | LVL: 6 | CLASS: SysAdmin (Tank)
+A pulsing data stream promising POWER.
+Status: Awaiting input...

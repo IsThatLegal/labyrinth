@@ -1,0 +1,4 @@
+--- SECTOR ROOM_214254 ---
+DEPTH: 23 | LVL: 2 | CORR: 0%
+A flickering doorway that defies geometry.
+Status: Awaiting input...

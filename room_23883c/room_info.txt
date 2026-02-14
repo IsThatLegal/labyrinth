@@ -1,0 +1,4 @@
+--- SECTOR ROOM_23883C ---
+DEPTH: 50 | LVL: 7 | CLASS: SysAdmin (Tank)
+A pulsing data stream promising POWER.
+Status: Awaiting input...

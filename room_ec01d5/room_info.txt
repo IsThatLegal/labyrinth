@@ -1,0 +1,4 @@
+--- SECTOR ROOM_EC01D5 ---
+DEPTH: 54 | LVL: 8 | CLASS: SysAdmin (Tank)
+A glitching, unstable rift promising AGILITY.
+Status: Awaiting input...

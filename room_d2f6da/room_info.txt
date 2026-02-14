@@ -1,0 +1,4 @@
+--- SECTOR ROOM_D2F6DA ---
+DEPTH: 38 | LVL: 6 | CLASS: SysAdmin (Tank)
+A heavily reinforced blast door promising DEFENSE.
+Status: Awaiting input...

@@ -1,0 +1,4 @@
+--- SECTOR ROOM_A44E9F ---
+DEPTH: 8
+A quiet, well-lit corridor.
+Status: Awaiting input...

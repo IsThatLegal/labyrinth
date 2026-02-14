@@ -1,0 +1,4 @@
+--- SECTOR ROOM_135FCD ---
+DEPTH: 48 | CORRUPTION: 30%
+A flickering doorway that defies geometry.
+Status: Awaiting input...

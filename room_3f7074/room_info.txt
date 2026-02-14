@@ -1,0 +1,4 @@
+--- SECTOR ROOM_3F7074 ---
+DEPTH: 26 | LVL: 5 | CLASS: SysAdmin (Tank)
+A pulsing data stream promising POWER.
+Status: Awaiting input...

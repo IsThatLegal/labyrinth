@@ -1,0 +1,4 @@
+--- SECTOR ROOM_F47D76 ---
+DEPTH: 96 | LVL: 7 | CORR: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

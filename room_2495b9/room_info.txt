@@ -1,0 +1,4 @@
+--- SECTOR ROOM_2495B9 ---
+DEPTH: 12 | LVL: 3 | CLASS: Novice
+A glitching, unstable rift promising AGILITY.
+Status: Awaiting input...

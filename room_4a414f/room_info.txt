@@ -1,0 +1,4 @@
+--- SECTOR ROOM_4A414F ---
+DEPTH: 10 | LVL: 1 | CLASS: Novice
+A glitching, unstable rift promising AGILITY.
+Status: Awaiting input...

@@ -1,0 +1,4 @@
+--- SECTOR ROOM_84058E ---
+DEPTH: 87 | LVL: 6 | CORR: 0%
+A flickering doorway that defies geometry.
+Status: Awaiting input...

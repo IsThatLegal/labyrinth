@@ -1,0 +1,4 @@
+--- SECTOR ROOM_20BDC0 ---
+DEPTH: 91 | LVL: 6 | CORR: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

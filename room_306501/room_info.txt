@@ -1,0 +1,4 @@
+--- SECTOR ROOM_306501 ---
+DEPTH: 40 | CORRUPTION: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

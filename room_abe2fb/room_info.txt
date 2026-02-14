@@ -1,0 +1,4 @@
+--- SECTOR ROOM_ABE2FB ---
+DEPTH: 66 | CORRUPTION: 30%
+A vibrating passage filled with static.
+Status: Awaiting input...

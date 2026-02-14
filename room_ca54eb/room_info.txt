@@ -1,0 +1,4 @@
+--- SECTOR ROOM_CA54EB ---
+DEPTH: 11 | LVL: 2 | CORR: 0%
+A vibrating passage filled with static.
+Status: Awaiting input...

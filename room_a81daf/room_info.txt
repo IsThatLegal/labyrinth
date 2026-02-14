@@ -1,0 +1,4 @@
+--- SECTOR ROOM_A81DAF ---
+DEPTH: 34 | LVL: 5 | CLASS: SysAdmin (Tank)
+A pulsing data stream promising POWER.
+Status: Awaiting input...

@@ -1,0 +1,4 @@
+--- SECTOR ROOM_1FBAAF ---
+DEPTH: 2 | LVL: 1 | CORR: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

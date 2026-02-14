@@ -1,0 +1,5 @@
+--- SECTOR ROOM_BFB86E ---
+DEPTH: 5 | CORRUPTION: 50%
+A flickering doorway that defies geometry.
+WARNING: Critical Corruption. System Purge imminent.
+Status: Awaiting input...

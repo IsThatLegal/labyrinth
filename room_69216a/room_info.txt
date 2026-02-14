@@ -1,0 +1,5 @@
+--- SECTOR ROOM_69216A ---
+DEPTH: 12 | CORRUPTION: 60%
+A quiet, well-lit corridor.
+WARNING: Critical Corruption. System Purge imminent.
+Status: Awaiting input...

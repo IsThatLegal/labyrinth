@@ -1,0 +1,5 @@
+--- SECTOR ROOM_9981D3 ---
+DEPTH: 39
+A flickering doorway that defies geometry.
+ALARM: Unauthorized access detected. System resistance increasing.
+Status: Awaiting input...

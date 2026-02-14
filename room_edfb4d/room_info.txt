@@ -1,0 +1,4 @@
+--- SECTOR ROOM_EDFB4D ---
+DEPTH: 11 | LVL: 2 | CLASS: SysAdmin (Tank)
+A glitching, unstable rift promising AGILITY.
+Status: Awaiting input...

@@ -1,0 +1,4 @@
+--- SECTOR ROOM_BAB44A ---
+DEPTH: 74 | LVL: 6 | CORR: 0%
+A flickering doorway that defies geometry.
+Status: Awaiting input...

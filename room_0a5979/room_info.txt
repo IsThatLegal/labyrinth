@@ -1,0 +1,5 @@
+--- SECTOR ROOM_0A5979 ---
+DEPTH: 50 | CORRUPTION: 35%
+A quiet, well-lit corridor.
+SECURE PROTOCOL DETECTED: This sector is locked. Sector Key required.
+Status: Awaiting input...

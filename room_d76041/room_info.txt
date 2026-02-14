@@ -1,0 +1,4 @@
+--- SECTOR ROOM_D76041 ---
+DEPTH: 38 | LVL: 4 | CORR: 0%
+A vibrating passage filled with static.
+Status: Awaiting input...

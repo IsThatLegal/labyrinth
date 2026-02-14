@@ -1,0 +1,4 @@
+--- SECTOR ROOM_FF1C85 ---
+DEPTH: 51 | LVL: 4 | CORR: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

@@ -1,0 +1,4 @@
+--- SECTOR ROOM_366D83 ---
+DEPTH: 41 | CORRUPTION: 0%
+A quiet, well-lit corridor.
+Status: Awaiting input...

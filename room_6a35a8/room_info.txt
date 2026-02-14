@@ -1,0 +1,5 @@
+--- SECTOR ROOM_6A35A8 ---
+DEPTH: 7 | CORRUPTION: 50%
+A vibrating passage filled with static.
+WARNING: Critical Corruption. System Purge imminent.
+Status: Awaiting input...

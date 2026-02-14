@@ -1,0 +1,4 @@
+--- SECTOR ROOM_E8A50C ---
+DEPTH: 37 | CORRUPTION: 15%
+A vibrating passage filled with static.
+Status: Awaiting input...

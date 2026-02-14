@@ -1,0 +1,4 @@
+--- SECTOR ROOM_D3B419 ---
+DEPTH: 40 | CORRUPTION: 0%
+A flickering doorway that defies geometry.
+Status: Awaiting input...
