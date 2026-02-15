@@ -6,11 +6,23 @@ import hashlib
 import time
 import copy
 
+# Colors
+class Colors:
+    CYAN = '\033[96m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    PURPLE = '\033[95m'
+    BOLD = '\033[1m'
+    END = '\033[0m'
+
 # Configuration
 GAME_DIR = os.path.dirname(os.path.abspath(__file__))
 PLAYER_FILE = os.path.join(GAME_DIR, "player_stats.json")
 GLOBAL_FILE = os.path.join(GAME_DIR, "global_stats.json")
 LOG_FILE = os.path.join(GAME_DIR, "session_log.json")
+BOSS_FILE = os.path.join(GAME_DIR, "boss_state.json")
+COMBAT_FILE = os.path.join(GAME_DIR, "combat_state.json")
 WORLD_SEED = "GEMINI_V1"
 
 # Content Mapping
@@ -28,27 +40,23 @@ SPECIAL_MOBS = {
     0x40: {"name": "[BOSS] Logic Bomb", "hp": 100, "atk": 30, "xp": 800},
     0x50: {"name": "[BOSS] Purge Sentinel", "hp": 300, "atk": 25, "xp": 1000},
     0x60: {"name": "[BOSS] Memory Leak", "hp": 350, "atk": 30, "xp": 1200, "traits": ["lifesteal"]},
-    0x70: {"name": "[BOSS] Race Condition", "hp": 400, "atk": 45, "xp": 1500, "traits": ["multi_strike"]},
-    0x80: {"name": "[BOSS] Null Pointer Overlord", "hp": 500, "atk": 40, "xp": 2000, "traits": ["true_dmg"]},
-    0x90: {"name": "[BOSS] Kernel Panic Archon", "hp": 600, "atk": 50, "xp": 3000, "traits": ["crit", "true_dmg"]},
+    0x70: {"name": "[BOSS] Race Condition", "hp": 400, "atk": 45, "xp": 1500, "traits": ["multi_strike", "race_condition"]},
+    0x80: {"name": "[BOSS] Null Pointer Overlord", "hp": 500, "atk": 50, "xp": 2000, "traits": ["true_dmg"]},
+    0x90: {"name": "[BOSS] Kernel Panic Archon", "hp": 600, "atk": 60, "xp": 3000, "traits": ["crit", "true_dmg"]},
+    0xA0: {"name": "[BOSS] Key Devourer", "hp": 2000, "atk": 150, "xp": 10000, "traits": ["true_dmg", "drain", "race_condition"]},
 }
 ITEMS = {
-    0x20: {"name": "Cache_Patch", "type": "heal", "value": 15, "desc": "Restores 15 HP"},
-    0x23: {"name": "Sector_Key", "type": "key", "desc": "Unlocks encrypted doors."},
-    0x30: {"name": "Logic_Blade", "type": "buff", "stat": "atk", "value": 3, "desc": "+3 ATK (Root)"},
-    0x31: {"name": "Compiler_Loop", "type": "buff", "stat": "xp", "value": 50, "desc": "+50 Instant XP (Root)"},
-    0x32: {"name": "Syntax_Lens", "type": "buff", "stat": "crit", "value": 2, "desc": "+2% Crit (Root)"},
-    0x40: {"name": "Protocol_Shield", "type": "buff", "stat": "max_hp", "value": 15, "dr": 1, "desc": "+15 Max HP & 1 DR (Firewall)"},
-    0x41: {"name": "Heavy_Kernel", "type": "buff", "stat": "max_hp", "value": 30, "desc": "+30 Max HP (Firewall)"},
-    0x42: {"name": "Iron_Clad_Mesh", "type": "buff", "stat": "dr", "value": 2, "desc": "+2 Damage Reduction (Firewall)"},
-    0x50: {"name": "Reflex_Buffer", "type": "buff", "stat": "dodge", "value": 5, "desc": "+5% Dodge (Exploit)"},
-    0x51: {"name": "Zero_Day_Shiv", "type": "buff", "stat": "crit", "value": 5, "desc": "+5% Crit (Exploit)"},
-    0x52: {"name": "Ghost_Protocol", "type": "buff", "stat": "dodge", "value": 3, "atk": 1, "desc": "+3% Dodge & +1 ATK (Exploit)"},
-}
-COMPILED_ITEMS = {
-    "Nano_Regen": {"type": "heal", "value": 100, "shield": 2, "desc": "Full Heal + 2-turn Invulnerability"},
-    "Void_Edge": {"type": "buff", "stat": "atk", "value": 10, "percent_dmg": 0.05, "desc": "+10 ATK & 5% Max HP True Damage"},
-    "Aegis_Firewall": {"type": "buff", "stat": "max_hp", "value": 50, "dr": 20, "desc": "+50 Max HP & 20 Damage Reduction"},
+    0x20: {"name": "Cache_Patch", "type": "heal", "value": 15, "size": 16, "desc": "Restores 15 HP"},
+    0x23: {"name": "Sector_Key", "type": "key", "size": 8, "desc": "Unlocks encrypted doors."},
+    0x30: {"name": "Logic_Blade", "type": "buff", "stat": "atk", "value": 3, "size": 32, "desc": "+3 ATK (Root)"},
+    0x31: {"name": "Compiler_Loop", "type": "buff", "stat": "xp", "value": 50, "size": 24, "desc": "+50 Instant XP (Root)"},
+    0x32: {"name": "Syntax_Lens", "type": "buff", "stat": "crit", "value": 2, "size": 16, "desc": "+2% Crit (Root)"},
+    0x40: {"name": "Protocol_Shield", "type": "buff", "stat": "max_hp", "value": 15, "dr": 1, "size": 48, "desc": "+15 Max HP & 1 DR (Firewall)"},
+    0x41: {"name": "Heavy_Kernel", "type": "buff", "stat": "max_hp", "value": 30, "size": 64, "desc": "+30 Max HP (Firewall)"},
+    0x42: {"name": "Iron_Clad_Mesh", "type": "buff", "stat": "dr", "value": 2, "size": 80, "desc": "+2 DR (Firewall)"},
+    0x50: {"name": "Reflex_Buffer", "type": "buff", "stat": "dodge", "value": 5, "size": 24, "desc": "+5% Dodge (Exploit)"},
+    0x51: {"name": "Zero_Day_Shiv", "type": "buff", "stat": "crit", "value": 5, "size": 32, "desc": "+5% Crit (Exploit)"},
+    0x52: {"name": "Ghost_Protocol", "type": "buff", "stat": "dodge", "value": 3, "atk": 1, "size": 40, "desc": "+3% Dodge & +1 ATK (Exploit)"},
 }
 DOOR_TYPES = {
     "ROOT": {"desc": "A pulsing data stream promising POWER.", "loot_table": [0x30, 0x31, 0x32]},
@@ -57,9 +65,9 @@ DOOR_TYPES = {
 }
 RARITIES = {
     "COMMON": {"chance": 0.70, "stat_mult": 1.0, "xp_mult": 1, "color": ""},
-    "RARE": {"chance": 0.20, "stat_mult": 1.5, "xp_mult": 2, "color": "[RARE] "},
-    "ELITE": {"chance": 0.08, "stat_mult": 2.5, "xp_mult": 5, "color": "[ELITE] "},
-    "LEGENDARY": {"chance": 0.02, "stat_mult": 5.0, "xp_mult": 20, "color": "[LEGENDARY] "},
+    "RARE": {"chance": 0.20, "stat_mult": 1.5, "xp_mult": 2, "color": f"{Colors.CYAN}[RARE]{Colors.END} "},
+    "ELITE": {"chance": 0.08, "stat_mult": 2.5, "xp_mult": 5, "color": f"{Colors.YELLOW}[ELITE]{Colors.END} "},
+    "LEGENDARY": {"chance": 0.02, "stat_mult": 5.0, "xp_mult": 20, "color": f"{Colors.PURPLE}{Colors.BOLD}[LEGENDARY]{Colors.END} "},
 }
 
 class DelveEngine:
@@ -83,7 +91,8 @@ class DelveEngine:
                 p = json.load(f)
                 p.setdefault("dr", 0); p.setdefault("percent_dmg", 0); p.setdefault("shield_turns", 0)
                 p.setdefault("lvl", 1); p.setdefault("xp_to_lvl", 200); p.setdefault("path_history", [])
-                p.setdefault("class", "Novice")
+                p.setdefault("class", "Novice"); p.setdefault("mem_capacity", 256); p.setdefault("mem_used", 0)
+                p.setdefault("fragmentation", 0); p.setdefault("symlinks", [])
                 return p
         return self.reset_run()
 
@@ -95,7 +104,7 @@ class DelveEngine:
             "xp": 0, "lvl": 1, "xp_to_lvl": 200, "shield_turns": 0,
             "room_path": "start", "depth": 0, "inventory": [], "corruption": 0,
             "backlog": [], "keys": 0, "path_history": [], "overclocked": False, "battles_won": 0,
-            "class": "Novice"
+            "class": "Novice", "mem_capacity": 256, "mem_used": 0, "fragmentation": 0, "symlinks": []
         }
         self.save_player(new_p)
         return new_p
@@ -118,26 +127,11 @@ class DelveEngine:
             self.player['xp_to_lvl'] = int(self.player['xp_to_lvl'] * 1.5)
             self.player['atk'] += 3; self.player['max_hp'] += 20; self.player['hp'] += 20
             self.player['dodge'] = min(75, self.player['dodge'] + 2)
-            
             p = self.player
             if p['dr'] >= 5 or p['max_hp'] > 200: p['class'] = "SysAdmin (Tank)"
             elif p['dodge'] > 40 or p['crit'] > 25: p['class'] = "Ghost (Rogue)"
             elif p['atk'] > 40: p['class'] = "Netrunner (DPS)"
-            
             print(f"KERNEL UPGRADED TO LVL {self.player['lvl']}! Class: {p['class']}")
-
-    def compile_item(self, item_name):
-        recipe_map = {"Cache_Patch": "Nano_Regen", "Logic_Blade": "Void_Edge", "Protocol_Shield": "Aegis_Firewall"}
-        if item_name not in recipe_map: print("Invalid recipe."); return
-        if self.player['xp'] < 150: print("Need 150 XP."); return
-        for i, it in enumerate(self.player['inventory']):
-            if it['name'] == item_name:
-                self.player['inventory'].pop(i); self.player['xp'] -= 150
-                new_item = copy.deepcopy(COMPILED_ITEMS[recipe_map[item_name]])
-                new_item['name'] = recipe_map[item_name]
-                self.player['inventory'].append(new_item)
-                print(f"Compiled {item_name} into {new_item['name']}!"); self.save_player(self.player); return
-        print("Item not found in buffer.")
 
     def get_rarity(self, rng):
         roll = rng.random(); cumulative = 0; depth = self.player['depth']
@@ -167,73 +161,178 @@ class DelveEngine:
         mob['xp'] = int(mob['xp'] * d_mult * rarity['xp_mult'])
         return mob
 
-    def attack(self, mob_filename):
-        mob_path = os.path.join(GAME_DIR, self.player['room_path'], "mobs", mob_filename)
-        if not os.path.exists(mob_path): return
-        with open(mob_path, "r") as f: mob = json.load(f)
-        print(f"--- COMBAT: {mob['name']} ---")
-        traits = mob.get('traits', [])
-        while mob['hp'] > 0 and self.player['hp'] > 0:
-            dmg = self.player['atk'] * (2 if self.player['overclocked'] else 1)
-            dmg += int(mob['hp'] * self.player['percent_dmg'])
-            if random.random() < (self.player['crit'] / 100.0): dmg *= 2; print("CRITICAL!")
-            self.player['overclocked'] = False; mob['hp'] -= dmg
-            print(f"You strike for {dmg}! ({max(0, mob['hp'])} HP left)")
-            if mob['hp'] <= 0:
-                print(f"Purged! +{mob['xp']} XP"); self.player['xp'] += mob['xp']
-                self.player['battles_won'] += 1; self.check_level_up()
-                if self.player['depth'] >= 20: self.player['corruption'] = max(0, self.player['corruption'] - 10)
-                if random.random() < 0.25: self.player['keys'] += 1
-                os.remove(mob_path); break
-            if self.player['shield_turns'] > 0:
-                self.player['shield_turns'] -= 1; print("SHIELD ABSORBED!")
-            else:
-                hit = True
-                if "true_dmg" not in traits:
-                    if random.random() < (self.player['dodge'] / 100.0): print("EVADED!"); hit = False
-                else: print("UNAVOIDABLE!")
-                if hit:
-                    mob_atk = mob['atk']
-                    if "crit" in traits and random.random() < 0.25: mob_atk *= 2; print("ENEMY CRIT!")
-                    final_dmg = max(1, mob_atk - self.player['dr'])
-                    self.player['hp'] -= final_dmg; print(f"Took {final_dmg} DMG ({self.player['hp']}/{self.player['max_hp']} HP)")
-                    if "drain" in traits:
-                        lost = 20; self.player['xp'] = max(0, self.player['xp'] - lost); print(f"DRAINED: Lost {lost} XP.")
-                    if "lifesteal" in traits:
-                        heal = final_dmg; mob['hp'] += heal; print(f"LIFESTEAL: Boss repaired {heal} integrity.")
-                    if "multi_strike" in traits and random.random() < 0.3:
-                        self.player['hp'] -= final_dmg; print(f"RACE CONDITION: Double strike! Took another {final_dmg} DMG.")
-        if self.player['hp'] <= 0: self.terminate()
-        self.save_player(self.player)
+    def defrag(self):
+        cost = 50
+        if self.player['xp'] >= cost:
+            self.player['xp'] -= cost
+            self.player['fragmentation'] = 0
+            print(">> DEFRAG COMPLETE: Memory address space consolidated."); self.save_player(self.player)
+        else: print(f"Need {cost} XP to defrag.")
+
+    def loot(self, item_filename):
+        item_path = os.path.join(GAME_DIR, self.player['room_path'], "items", item_filename)
+        if not os.path.exists(item_path): return
+        with open(item_path, "r") as f: item = json.load(f)
+        size = item.get('size', 16)
+        if self.player['mem_used'] + self.player['fragmentation'] + size > self.player['mem_capacity']:
+            print(f"[!] MALLOC FAILURE: Buffer too fragmented or full ({self.player['mem_used']}+{self.player['fragmentation']}+{size} > {self.player['mem_capacity']})")
+            return
+        print(f"Buffer + {item['name']} ({size} bytes)")
+        self.player['inventory'].append(item); self.player['mem_used'] += size
+        os.remove(item_path); self.save_player(self.player)
 
     def use_item(self, item_name):
         for i, it in enumerate(self.player['inventory']):
             if it['name'] == item_name:
                 item = self.player['inventory'].pop(i)
+                size = item.get('size', 16)
+                self.player['mem_used'] -= size; self.player['fragmentation'] += size
                 if item['type'] == "heal":
                     v = item['value']; self.player['hp'] = min(self.player['max_hp'], self.player['hp'] + v)
-                    if 'shield' in item: self.player['shield_turns'] += item['shield']
-                    print(f"HP Restored. Shield: {self.player['shield_turns']}")
+                    print(f"HP Restored. Hole created: {size} bytes.")
                 elif item['type'] == "buff":
                     self.player[item['stat']] += item['value']
-                    if 'percent_dmg' in item: self.player['percent_dmg'] += item['percent_dmg']
                     if 'dr' in item: self.player['dr'] += item['dr']
                     if item['stat'] == "max_hp": self.player['hp'] += item['value']
                     if item['stat'] == "xp": self.player['xp'] += item['value']
                     if 'atk' in item and item['stat'] != 'atk': self.player['atk'] += item['atk']
-                    print(f"Applied {item['name']}.")
+                    print(f"Applied {item['name']}. Hole created: {size} bytes.")
                 elif item['type'] == "key": self.player['keys'] += 1
                 self.save_player(self.player); return
         print("Item not found.")
 
-    def skill(self, skill_name):
-        costs = {"stealth": 50, "overclock": 75, "purge": 100}
-        if self.player['xp'] < costs.get(skill_name, 999): print("Low XP."); return
-        self.player['xp'] -= costs[skill_name]
-        if skill_name == "stealth": self.player['skills'] = {"stealth": 1}
-        elif skill_name == "overclock": self.player['overclocked'] = True
-        elif skill_name == "purge": self.player['corruption'] = max(0, self.player['corruption'] - 30)
-        self.save_player(self.player); print(f"Activated {skill_name}.")
+    def attack_init(self, mob_filename):
+        mob_path = os.path.join(GAME_DIR, self.player['room_path'], "mobs", mob_filename)
+        if not os.path.exists(mob_path): return
+        with open(mob_path, "r") as f: mob = json.load(f)
+        state = {
+            "mob_name": mob['name'], "mob_hp": mob['hp'], "mob_max_hp": mob['hp'],
+            "mob_atk": mob['atk'], "mob_traits": mob.get('traits', []), "mob_xp": mob['xp'],
+            "mob_filename": mob_filename, "multiplier": 1.0, "active": True
+        }
+        with open(COMBAT_FILE, "w") as f: json.dump(state, f, indent=4)
+        print(f"--- I.P. COMBAT INITIALIZED: {mob['name']} ---")
+        print("Queue Opcode: --op <MOV|NOP|ADD|XOR|LOCK>")
+
+    def combat_turn(self, opcode):
+        if not os.path.exists(COMBAT_FILE): print("No combat active."); return
+        with open(COMBAT_FILE, "r") as f: c = json.load(f)
+        p = self.player
+        if not c['active']: return
+        
+        c.setdefault('lock_turns', 0)
+        
+        # Player Turn
+        print(f">> IP: Executing {opcode}...")
+        p_dmg = 0
+        if opcode == "MOV":
+            p_dmg = int(p['atk'] * c['multiplier'])
+            if random.random() < (p['crit'] / 100.0): p_dmg *= 2; print(f"{Colors.RED}{Colors.BOLD}CRITICAL!{Colors.END}")
+            c['mob_hp'] -= p_dmg; c['multiplier'] = 1.0
+            print(f"Result: {Colors.GREEN}{p_dmg} DMG{Colors.END} to {c['mob_name']}.")
+        elif opcode == "NOP":
+            c['multiplier'] *= 2.0; print("Result: CPU Cycle skipped. Next MOV doubled.")
+        elif opcode == "ADD":
+            p['atk'] += 2; print(f"Result: {Colors.YELLOW}ATK permanently increased by 2{Colors.END} for this fight.")
+        elif opcode == "XOR":
+            p['dr'] += 10; print(f"Result: {Colors.CYAN}Temporary encryption active. +10 DR and Reflective Shell engaged.{Colors.END}")
+        elif opcode == "LOCK":
+            if p['keys'] > 0:
+                p['keys'] -= 1; c['lock_turns'] = 3
+                if "Key Devourer" in c['mob_name']:
+                    c.setdefault('keys_fed', 0)
+                    c['keys_fed'] += 1
+                    print(f"{Colors.YELLOW}>> KEY FEED: The Devourer is occupied with your Sector Key! (System Frozen for 3 turns){Colors.END}")
+                    c['mob_hp'] = min(c['mob_max_hp'], c['mob_hp'] + 100)
+                    c['mob_atk'] += 5
+                    print(f">> INCORPORATION: The boss consumed key #{c['keys_fed']}! {Colors.GREEN}+100 HP{Colors.END} and {Colors.YELLOW}+5 ATK{Colors.END}.")
+                    
+                    fb_dmg = 0
+                    if c['keys_fed'] > 30:
+                        print(f"\n{Colors.RED}{Colors.BOLD}!!! CRITICAL OVERLOAD: The Devourer has reached maximum capacity and EXPLODES !!!{Colors.END}")
+                        print(">> The resulting data shockwave vaporizes your core connection.")
+                        self.terminate()
+                    elif c['keys_fed'] > 20:
+                        print(f"{Colors.RED}>> DISGUST: The Devourer poops out a corrupted memory block. It looks dangerously bloated.{Colors.END}")
+                        fb_dmg = 41
+                    elif c['keys_fed'] > 15:
+                        print(f"{Colors.YELLOW}>> REJECTION: The Devourer barfs uncompiled code! Its internal pressure is rising.{Colors.END}")
+                        fb_dmg = 60
+                    elif c['keys_fed'] > 8:
+                        print(f"{Colors.CYAN}>> GASEOUS: A digital fart echoes through the sector. The air smells of ozone and burnt silicon.{Colors.END}")
+                        fb_dmg = 30
+                    else:
+                        print(f"{Colors.GREEN}>> SATIATED: The Devourer lets out a data-heavy burp.{Colors.END}")
+                        fb_dmg = 10
+                    
+                    if fb_dmg > 0:
+                        if random.random() < (p['dodge'] / 100.0):
+                            print(f"{Colors.CYAN}>> AVOIDED: You dodged the digital fallout!{Colors.END}")
+                        else:
+                            p['hp'] -= fb_dmg
+                            print(f"{Colors.RED}>> FEEDBACK: You took {fb_dmg} damage from the boss's reaction! ({p['hp']}/{p['max_hp']} HP){Colors.END}")
+                else:
+                    print(f"{Colors.CYAN}>> KERNEL LOCK: Sector Key used to throttle enemy process. (ATK -50% for 3 turns){Colors.END}")
+            else:
+                print(f"{Colors.RED}>> NO KEYS left to lock with!{Colors.END}")
+        
+        if c['mob_hp'] <= 0:
+            print(f"{Colors.PURPLE}{Colors.BOLD}Purged! +{c['mob_xp']} XP{Colors.END}"); p['xp'] += c['mob_xp']; p['battles_won'] += 1; self.check_level_up()
+            if p['depth'] >= 100:
+                print("\n" + "="*40)
+                print(f"{Colors.PURPLE}{Colors.BOLD}>> CORE BREACH SUCCESSFUL: THE LABYRINTH IS CONQUERED <<{Colors.END}")
+                print("="*40 + "\n")
+                self.globals['total_xp'] += p['xp']; self.save_global()
+                if os.path.exists(PLAYER_FILE): os.remove(PLAYER_FILE)
+                sys.exit()
+            if random.random() < 0.25:
+                p['keys'] += 1; print(f"{Colors.GREEN}>> DATA LEAK: Found 1 Sector Key in the wreckage.{Colors.END}")
+            os.remove(os.path.join(GAME_DIR, p['room_path'], "mobs", c['mob_filename']))
+            os.remove(COMBAT_FILE); self.save_player(p); return
+
+        # Mob Turn
+        hit = True
+        is_stunned = c.get('lock_turns', 0) > 0 and "Key Devourer" in c['mob_name']
+        
+        if is_stunned:
+            print(f"{Colors.CYAN}>> STUNNED: Key Devourer is busy eating! ({c['lock_turns']} turns left){Colors.END}")
+            c['lock_turns'] -= 1
+            hit = False
+        elif "true_dmg" not in c['mob_traits']:
+            if random.random() < (p['dodge'] / 100.0): print(f"{Colors.CYAN}EVADED!{Colors.END}"); hit = False
+        else: print(f"{Colors.RED}UNAVOIDABLE!{Colors.END}")
+        
+        if hit:
+            dmg = max(1, c['mob_atk'] - p['dr'])
+            if c.get('lock_turns', 0) > 0:
+                dmg //= 2; c['lock_turns'] -= 1; print(f"{Colors.CYAN}>> THROTTLED: Kernel Lock active ({c['lock_turns']} turns left){Colors.END}")
+            
+            if "crit" in c['mob_traits'] and random.random() < 0.25:
+                dmg *= 2; print(f"{Colors.RED}{Colors.BOLD}ENEMY CRIT!{Colors.END}")
+            # Race Condition Check
+            if "race_condition" in c['mob_traits'] and random.random() < 0.3:
+                print(f"{Colors.RED}>> RACE CONDITION: Mob injected code into your pipeline!{Colors.END}"); p['hp'] -= p_dmg
+                print(f"You struck yourself for {Colors.RED}{p_dmg} DMG!{Colors.END}")
+            
+            p['hp'] -= dmg; print(f"Took {Colors.RED}{dmg} DMG{Colors.END} ({p['hp']}/{p['max_hp']} HP)")
+            if opcode == "XOR":
+                reflect = dmg // 2; c['mob_hp'] -= reflect; p['dr'] -= 10
+                print(f"{Colors.GREEN}>> REFLECTED: {reflect} DMG returned to {c['mob_name']}.{Colors.END}")
+
+        if p['hp'] <= 0: self.terminate()
+        with open(COMBAT_FILE, "w") as f: json.dump(c, f, indent=4)
+        self.save_player(p)
+
+    def symlink(self):
+        if self.player['xp'] < 200: print("Need 200 XP for Symlink."); return
+        self.player['xp'] -= 200
+        link_id = f"link_{int(time.time())}"
+        safe_path = os.path.join(GAME_DIR, "start", link_id)
+        current_path = os.path.join(GAME_DIR, self.player['room_path'])
+        os.symlink(current_path, safe_path)
+        self.player['symlinks'].append({"id": link_id, "source": self.player['room_path']})
+        print(f">> SYMLINK CREATED: {link_id} -> {self.player['room_path']}")
+        self.save_player(self.player)
 
     def generate_room(self, path, door_type="ROOT", is_backtrack=False):
         room_seed = hashlib.sha256((self.seed + path).encode()).hexdigest()
@@ -246,7 +345,16 @@ class DelveEngine:
             f.write(DOOR_TYPES[door_type]["desc"] + "\nStatus: Awaiting input...\n")
         mobs_dir = os.path.join(room_dir, "mobs"); os.makedirs(mobs_dir, exist_ok=True)
         for f_n in os.listdir(mobs_dir): os.remove(os.path.join(mobs_dir, f_n))
-        if depth > 0 and depth < 100 and depth % 10 == 0:
+        
+        # Mobs can follow symlinks!
+        if path == "start":
+            for link in self.player['symlinks']:
+                if random.random() < 0.3:
+                    print(f"[!] WARNING: Signal leakage detected from {link['id']}!")
+                    mob = self.get_scaled_mob(0x01, rng); mob['name'] = f"[LEAK] {mob['name']}"
+                    with open(os.path.join(mobs_dir, f"LEAK_{mob['name']}.json"), "w") as f: json.dump(mob, f, indent=4)
+
+        if depth > 0 and depth <= 100 and depth % 10 == 0:
             boss_id = 0x10 * (depth // 10)
             if boss_id in SPECIAL_MOBS:
                 mob = self.get_scaled_mob(boss_id, rng, forced_rarity="COMMON")
@@ -256,16 +364,20 @@ class DelveEngine:
             if depth >= 80: available_mobs.extend([0x04, 0x05])
             mob = self.get_scaled_mob(rng.choice(available_mobs), rng, is_ghost=(is_backtrack and rng.random() < 0.5))
             with open(os.path.join(mobs_dir, f"{mob['name'].replace(' ', '_')}.json"), "w") as f: json.dump(mob, f, indent=4)
+        
         items_dir = os.path.join(room_dir, "items"); os.makedirs(items_dir, exist_ok=True)
         for f_n in os.listdir(items_dir): os.remove(os.path.join(items_dir, f_n))
         loot_table = DOOR_TYPES[door_type].get("loot_table", [0x20, 0x23])
         if depth % 10 == 9:
-            it = ITEMS[0x40] # Protocol Shield guarantee
+            it = ITEMS[0x40] # Protocol Shield
             with open(os.path.join(items_dir, f"{it['name']}.json"), "w") as f: json.dump(it, f, indent=4)
+            it_key = ITEMS[0x23] # Sector Key
+            with open(os.path.join(items_dir, f"{it_key['name']}.json"), "w") as f: json.dump(it_key, f, indent=4)
         elif rng.random() < 0.5:
             item_id = rng.choice(loot_table) if rng.random() < 0.8 else rng.choice([0x20, 0x23])
             it = ITEMS[item_id]
             with open(os.path.join(items_dir, f"{it['name']}.json"), "w") as f: json.dump(it, f, indent=4)
+        
         doors_dir = os.path.join(room_dir, "doors"); os.makedirs(doors_dir, exist_ok=True)
         for f_n in os.listdir(doors_dir): os.remove(os.path.join(doors_dir, f_n))
         for i in range(rng.randint(1, 3)):
@@ -275,6 +387,8 @@ class DelveEngine:
                 if depth > 0 and depth % 10 == 0: f.write("LOCKED: True")
 
     def enter_room(self, door_f):
+        door_path = os.path.join(GAME_DIR, self.player['room_path'], "doors", door_f)
+        print(f"DEBUG: Checking {door_path}")
         mobs_dir = os.path.join(GAME_DIR, self.player['room_path'], "mobs")
         active = os.listdir(mobs_dir) if os.path.exists(mobs_dir) else []
         door_path = os.path.join(GAME_DIR, self.player['room_path'], "doors", door_f)
@@ -282,17 +396,12 @@ class DelveEngine:
             with open(door_path, "r") as f: d_data = f.read()
             if "LOCKED: True" in d_data:
                 if self.player['keys'] > 0: self.player['keys'] -= 1; print("Unlocked.")
-                else: print("LOCKED."); return
+                else: print("LOCKED."); sys.exit(1)
         if active:
-            if self.player.get('skills', {}).get('stealth', 0) > 0: self.player['skills']['stealth'] = 0; print("Stealth used.")
-            else:
-                if random.random() < 0.6:
-                    with open(os.path.join(mobs_dir, active[0]), "r") as f: mob = json.load(f)
-                    if self.player['shield_turns'] > 0: self.player['shield_turns'] -= 1; print("Shield absorbed!")
-                    elif random.random() < (self.player['dodge'] / 100.0): print("EVADED!")
-                    else:
-                        self.player['hp'] -= mob['atk']; print(f"Intercepted by {mob['name']}! Took {mob['atk']} DMG.")
-                        if self.player['hp'] <= 0: self.terminate()
+            if random.random() < 0.4:
+                with open(os.path.join(mobs_dir, active[0]), "r") as f: mob = json.load(f)
+                self.player['hp'] -= mob['atk']; print(f"Intercepted by {mob['name']}! Took {mob['atk']} DMG.")
+                if self.player['hp'] <= 0: self.terminate()
         if not os.path.exists(door_path): return
         with open(door_path, "r") as f: dt = f.readlines()[0].split(": ")[1].strip()
         self.player['path_history'].append(self.player['room_path'])
@@ -300,28 +409,26 @@ class DelveEngine:
         self.player['depth'] += 1; self.generate_room(self.player['room_path'], dt); self.save_player(self.player)
         print(f"Depth {self.player['depth']} reached.")
 
-    def loot(self, item_filename):
-        item_path = os.path.join(GAME_DIR, self.player['room_path'], "items", item_filename)
-        if not os.path.exists(item_path): return
-        with open(item_path, "r") as f: item = json.load(f)
-        print(f"Buffer + {item['name']}"); self.player['inventory'].append(item)
-        os.remove(item_path); self.save_player(self.player)
-
     def backtrack(self):
         if not self.player['path_history']: return
         p = self.player['path_history'].pop(); self.player['depth'] = max(0, self.player['depth'] - 1)
         self.player['room_path'] = p; self.generate_room(p, is_backtrack=True); self.save_player(self.player)
 
     def sell_key(self):
-        if self.player['keys'] > 0: self.player['keys'] -= 1; self.player['xp'] += 50; print("Key -> 50 XP."); self.save_player(self.player)
+        if self.player['keys'] > 0:
+            self.player['keys'] -= 1; self.player['xp'] += 50
+            print("Key -> 50 XP."); self.save_player(self.player)
 
     def buy_key(self):
-        if self.player['xp'] >= 100: self.player['xp'] -= 100; self.player['keys'] += 1; print("100 XP -> Key."); self.save_player(self.player)
+        if self.player['xp'] >= 100:
+            self.player['xp'] -= 100; self.player['keys'] += 1
+            print("100 XP -> Key."); self.save_player(self.player)
         else: print("Need 100 XP.")
 
     def terminate(self):
         print("RUN TERMINATED."); self.globals['total_xp'] += self.player['xp']; self.save_global()
         if self.player['depth'] > 0 and os.path.exists(PLAYER_FILE): os.remove(PLAYER_FILE)
+        if os.path.exists(COMBAT_FILE): os.remove(COMBAT_FILE)
         sys.exit()
 
     def upgrade(self, stat):
@@ -333,57 +440,16 @@ class DelveEngine:
             self.save_global()
         else: print("Need 200 Global XP.")
 
-    def boss_init(self):
-        boss_hp = 500 + (self.player['keys'] * 50) + (self.player['xp'] // 2)
-        state = {"name": "THE KEY DEVOURER", "hp": boss_hp, "max_hp": boss_hp, "atk": 25, "phase": 1, "grasp_active": False, "active": True}
-        with open(os.path.join(GAME_DIR, "boss_state.json"), "w") as f: json.dump(state, f, indent=4)
-        print(f"!!! THE CORE TREMBLES !!!\nTHE KEY DEVOURER MANIFESTS. HP: {boss_hp}\nUse --boss-action <1:Strike, 2:Mitigate, 3:Empower, 4:Reconstruct>")
-
-    def boss_turn(self, action):
-        state_path = os.path.join(GAME_DIR, "boss_state.json")
-        if not os.path.exists(state_path): print("No boss active. Use --boss-start"); return
-        with open(state_path, "r") as f: boss = json.load(f)
-        if self.player['hp'] <= 0 or not boss['active']: print("The battle is over."); return
-        p, mitigating, p_dmg = self.player, False, self.player['atk']
-        if action == "2":
-            if boss['grasp_active']: print(">> GRASPED! You cannot mitigate damage right now!")
-            elif p['keys'] > 0: p['keys'] -= 1; mitigating = True; print(f">> MITIGATE: Used 1 Key. Damage will be halved.")
-            else: print(">> NO KEYS left to mitigate with!")
-        elif action == "3":
-            if boss['grasp_active']: print(">> GRASPED! You cannot empower your strikes right now!")
-            elif p['keys'] > 0: p['keys'] -= 1; p_dmg *= 2; print(f">> EMPOWER: Used 1 Key. Strike power doubled!")
-            else: print(">> NO KEYS left to empower with!")
-        elif action == "4":
-            if p['xp'] >= 100: p['xp'] -= 100; p['hp'] = min(p['max_hp'], p['hp'] + 50); print(f">> RECONSTRUCT: Data segments repaired. +50 HP ({p['hp']}/{p['max_hp']})")
-            else: print(">> NO XP left to reconstruct with!")
-        elif action != "1": print("Invalid action. Strike [1], Mitigate [2], Empower [3], Reconstruct [4]"); return
-        boss['grasp_active'] = False
-        if p['overclocked']: p_dmg *= 2; p['overclocked'] = False
-        if random.random() < (p['crit'] / 100.0): p_dmg *= 2; print("CRITICAL!")
-        boss['hp'] -= p_dmg; print(f"You strike the Devourer for {p_dmg} DMG! ({max(0, boss['hp'])} HP left)")
-        if boss['hp'] <= 0:
-            print("\n*** THE KEY DEVOURER DISSIPATES INTO PURE DATA ***\nLabyrinth Cleared. You have mastered the Core."); self.globals['total_xp'] += 2000; self.save_global(); boss['active'] = False; os.remove(state_path); self.save_player(p); return
-        new_phase = 1
-        if boss['hp'] < boss['max_hp'] * 0.33: new_phase = 3
-        elif boss['hp'] < boss['max_hp'] * 0.66: new_phase = 2
-        if new_phase > boss['phase']: boss['phase'] = new_phase; print(f"!!! BOSS EVOLVING: PHASE {boss['phase']} !!!"); boss['atk'] += 10
-        if boss['phase'] >= 2 and random.random() < 0.4:
-            if p['keys'] > 0: p['keys'] -= 1; boss['hp'] = min(boss['max_hp'], boss['hp'] + 40); boss['atk'] += 2; print(">> CONSUME KEY: The boss ate one of your keys and repaired itself!")
-            else: print(">> CONSUME KEY: You have no keys! The Devourer screams in frustration (+5 ATK)."); boss['atk'] += 5
-        if (boss['phase'] == 1 or boss['phase'] == 3) and random.random() < 0.3: drain = 30; p['xp'] = max(0, p['xp'] - drain); print(f">> RESOURCE DRAIN: Your buffer leaked {drain} XP into the void.")
-        if boss['phase'] == 3 and random.random() < 0.3: boss['grasp_active'] = True; print(">> DEVOURER'S GRASP: Dark code binds your resources! (Choices disabled next turn)")
-        boss_atk = boss['atk'] // 2 if mitigating else boss['atk']
-        p['hp'] -= boss_atk; print(f"THE DEVOURER STRIKES: Took {boss_atk} DMG ({p['hp']}/{p['max_hp']} HP)")
-        if p['hp'] <= 0: print("\n[!] FATAL ERROR: YOU HAVE BEEN DEVOURED."); self.terminate()
-        with open(state_path, "w") as f: json.dump(boss, f, indent=4)
-        self.save_player(p)
-
     def show_status(self):
         p = self.player
-        print(f"\n--- RUN DEPTH {p['depth']} --- XP: {p['xp']} | LVL: {p['lvl']} | CLASS: {p['class']}")
-        print(f"HP: {p['hp']}/{p['max_hp']} | ATK: {p['atk']} | DR: {p['dr']} | DODGE: {p['dodge']}% | CRIT: {p['crit']}%")
+        print(f"\n{Colors.BOLD}--- RUN DEPTH {p['depth']} --- XP: {Colors.YELLOW}{p['xp']}{Colors.END} | LVL: {Colors.CYAN}{p['lvl']}{Colors.END} | CLASS: {Colors.PURPLE}{p['class']}{Colors.END}")
+        
+        hp_color = Colors.GREEN if p['hp'] > p['max_hp'] * 0.5 else Colors.RED
+        print(f"HP: {hp_color}{p['hp']}/{p['max_hp']}{Colors.END} | ATK: {Colors.YELLOW}{p['atk']}{Colors.END} | DR: {p['dr']} | DODGE: {p['dodge']}% | CRIT: {p['crit']}%")
+        
+        print(f"MEMORY: {Colors.BOLD}{p['mem_used']}B Used{Colors.END} | {p['fragmentation']}B Holes | {p['mem_capacity']}B Cap")
         print(f"BUFFER: {[i['name'] for i in p['inventory']]}")
-        print(f"GLOBAL XP: {self.globals['total_xp']} | BASE: {self.globals['base_hp']}HP/{self.globals['base_atk']}ATK")
+        print(f"GLOBAL XP: {Colors.YELLOW}{self.globals['total_xp']}{Colors.END} | BASE: {self.globals['base_hp']}HP/{self.globals['base_atk']}ATK")
         print(f"-------------------\n")
 
 if __name__ == "__main__":
@@ -392,15 +458,40 @@ if __name__ == "__main__":
     cmd = sys.argv[1]
     if cmd == "--init": engine.reset_run(); engine.generate_room("start"); print("Init.")
     elif cmd == "--enter": engine.enter_room(sys.argv[2])
-    elif cmd == "--attack": engine.attack(sys.argv[2])
+    elif cmd == "--attack": engine.attack_init(sys.argv[2])
+    elif cmd == "--op": engine.combat_turn(sys.argv[2])
     elif cmd == "--loot": engine.loot(sys.argv[2])
     elif cmd == "--use": engine.use_item(sys.argv[2])
-    elif cmd == "--compile": engine.compile_item(sys.argv[2])
-    elif cmd == "--skill": engine.skill(sys.argv[2])
+    elif cmd == "--defrag": engine.defrag()
+    elif cmd == "--skill" and sys.argv[2] == "symlink": engine.symlink()
     elif cmd == "--upgrade": engine.upgrade(sys.argv[2])
     elif cmd == "--status": engine.show_status()
+    elif cmd == "--panic":
+        if engine.player['xp'] >= 500:
+            engine.player['xp'] -= 500; engine.player['room_path'] = "start"; engine.player['depth'] = 0
+            engine.player['path_history'] = []; engine.generate_room("start")
+            print(">> SYSTEM PANIC: Emergency exit to Start Sector initiated."); engine.save_player(engine.player)
+        else: print("Need 500 XP to Panic.")
+    elif cmd == "--overclock":
+        if os.path.exists(COMBAT_FILE):
+            if engine.player['xp'] >= 2000:
+                engine.player['xp'] -= 2000
+                with open(COMBAT_FILE, "r") as f: c = json.load(f)
+                c['lock_turns'] = 10; c['mob_atk'] = 0 # Full stun
+                with open(COMBAT_FILE, "w") as f: json.dump(c, f, indent=4)
+                print(">> SYSTEM OVERCLOCK: Sacrificing XP to freeze enemy core. (Stunned for 10 turns)"); engine.save_player(engine.player)
+            else: print("Need 2000 XP to Overclock.")
+        else: print("No combat active.")
+    elif cmd == "--purge-cmd":
+        if os.path.exists(COMBAT_FILE):
+            with open(COMBAT_FILE, "r") as f: c = json.load(f)
+            if c['mob_hp'] < (c['mob_max_hp'] * 0.25):
+                print(f">> ROOT PURGE: Executing total system wipe on {c['mob_name']}...")
+                c['mob_hp'] = 0; engine.player['xp'] = 0
+                with open(COMBAT_FILE, "w") as f: json.dump(c, f, indent=4)
+                engine.combat_turn("MOV") # Trigger victory logic
+            else: print("Enemy HP too high for Purge (Need < 25%).")
+        else: print("No combat active.")
     elif cmd == "--sell-key": engine.sell_key()
     elif cmd == "--buy-key": engine.buy_key()
     elif cmd == "--back": engine.backtrack()
-    elif cmd == "--boss-start": engine.boss_init()
-    elif cmd == "--boss-action": engine.boss_turn(sys.argv[2])
