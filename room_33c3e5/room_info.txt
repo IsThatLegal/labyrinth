@@ -1,4 +1,0 @@
---- SECTOR ROOM_33C3E5 ---
-DEPTH: 46 | CORRUPTION: 0%
-A vibrating passage filled with static.
-Status: Awaiting input...

@@ -1,4 +1,0 @@
---- SECTOR ROOM_547A8F ---
-DEPTH: 45 | CORRUPTION: 0%
-A vibrating passage filled with static.
-Status: Awaiting input...

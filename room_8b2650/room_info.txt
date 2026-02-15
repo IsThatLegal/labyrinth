@@ -1,4 +1,0 @@
---- SECTOR ROOM_8B2650 ---
-DEPTH: 15 | LVL: 3 | CLASS: Novice
-A pulsing data stream promising POWER.
-Status: Awaiting input...

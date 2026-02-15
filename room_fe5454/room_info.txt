@@ -1,4 +1,0 @@
---- SECTOR ROOM_FE5454 ---
-DEPTH: 94 | LVL: 6 | CORR: 0%
-A quiet, well-lit corridor.
-Status: Awaiting input...

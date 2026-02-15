@@ -1,4 +1,0 @@
---- SECTOR ROOM_C0E487 ---
-DEPTH: 50 | CORRUPTION: 0%
-A flickering doorway that defies geometry.
-Status: Awaiting input...

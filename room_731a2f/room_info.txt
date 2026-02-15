@@ -1,4 +1,0 @@
---- SECTOR ROOM_731A2F ---
-DEPTH: 5
-A vibrating passage filled with static.
-Status: Awaiting input...

@@ -1,4 +1,0 @@
---- SECTOR ROOM_A51090 ---
-DEPTH: 74 | CORRUPTION: 55%
-A quiet, well-lit corridor.
-Status: Awaiting input...

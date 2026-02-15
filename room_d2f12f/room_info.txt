@@ -1,4 +1,0 @@
---- SECTOR ROOM_D2F12F ---
-DEPTH: 70 | LVL: 5 | CORR: 0%
-A flickering doorway that defies geometry.
-Status: Awaiting input...

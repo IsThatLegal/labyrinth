@@ -1,4 +1,0 @@
---- SECTOR ROOM_C23DCC ---
-DEPTH: 21
-A flickering doorway that defies geometry.
-Status: Awaiting input...

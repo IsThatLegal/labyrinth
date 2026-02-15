@@ -1,4 +1,0 @@
---- SECTOR ROOM_EAD823 ---
-DEPTH: 64 | LVL: 9 | CLASS: SysAdmin (Tank)
-A pulsing data stream promising POWER.
-Status: Awaiting input...

@@ -1,4 +1,0 @@
---- SECTOR ROOM_FFB923 ---
-DEPTH: 54 | CORRUPTION: 0%
-A quiet, well-lit corridor.
-Status: Awaiting input...

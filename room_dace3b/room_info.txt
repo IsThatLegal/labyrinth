@@ -1,4 +1,0 @@
---- SECTOR ROOM_DACE3B ---
-DEPTH: 39 | CORRUPTION: 0%
-A flickering doorway that defies geometry.
-Status: Awaiting input...

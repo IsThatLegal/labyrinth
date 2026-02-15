@@ -1,5 +1,0 @@
---- SECTOR ROOM_8029E6 ---
-DEPTH: 36
-A flickering doorway that defies geometry.
-ALARM: Unauthorized access detected. System resistance increasing.
-Status: Awaiting input...

@@ -1,4 +1,0 @@
---- SECTOR ROOM_CAFBF2 ---
-DEPTH: 30 | LVL: 5 | CLASS: SysAdmin (Tank)
-A pulsing data stream promising POWER.
-Status: Awaiting input...

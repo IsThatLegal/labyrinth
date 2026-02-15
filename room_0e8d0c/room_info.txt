@@ -1,4 +1,0 @@
---- SECTOR ROOM_0E8D0C ---
-DEPTH: 35 | CORRUPTION: 0%
-A quiet, well-lit corridor.
-Status: Awaiting input...

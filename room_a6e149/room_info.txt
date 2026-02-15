@@ -1,4 +1,0 @@
---- SECTOR ROOM_A6E149 ---
-DEPTH: 88 | LVL: 6 | CORR: 0%
-A vibrating passage filled with static.
-Status: Awaiting input...

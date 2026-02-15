@@ -1,4 +1,0 @@
---- SECTOR ROOM_87C80A ---
-DEPTH: 13 | LVL: 1 | CORR: 0%
-A flickering doorway that defies geometry.
-Status: Awaiting input...

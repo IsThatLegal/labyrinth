@@ -1,4 +1,0 @@
---- SECTOR ROOM_0414C4 ---
-DEPTH: 17 | LVL: 2 | CORR: 0%
-A quiet, well-lit corridor.
-Status: Awaiting input...

@@ -166,7 +166,7 @@ class DelveEngine:
         if self.player['xp'] >= cost:
             self.player['xp'] -= cost
             self.player['fragmentation'] = 0
-            print(">> DEFRAG COMPLETE: Memory address space consolidated."); self.save_player(self.player)
+            print(f"{Colors.CYAN}>> DEFRAG COMPLETE: Memory address space consolidated.{Colors.END}"); self.save_player(self.player)
         else: print(f"Need {cost} XP to defrag.")
 
     def loot(self, item_filename):
@@ -175,9 +175,9 @@ class DelveEngine:
         with open(item_path, "r") as f: item = json.load(f)
         size = item.get('size', 16)
         if self.player['mem_used'] + self.player['fragmentation'] + size > self.player['mem_capacity']:
-            print(f"[!] MALLOC FAILURE: Buffer too fragmented or full ({self.player['mem_used']}+{self.player['fragmentation']}+{size} > {self.player['mem_capacity']})")
+            print(f"{Colors.RED}[!] MALLOC FAILURE: Buffer too fragmented or full ({self.player['mem_used']}+{self.player['fragmentation']}+{size} > {self.player['mem_capacity']}){Colors.END}")
             return
-        print(f"Buffer + {item['name']} ({size} bytes)")
+        print(f"{Colors.GREEN}Buffer + {item['name']} ({size} bytes){Colors.END}")
         self.player['inventory'].append(item); self.player['mem_used'] += size
         os.remove(item_path); self.save_player(self.player)
 
@@ -189,14 +189,14 @@ class DelveEngine:
                 self.player['mem_used'] -= size; self.player['fragmentation'] += size
                 if item['type'] == "heal":
                     v = item['value']; self.player['hp'] = min(self.player['max_hp'], self.player['hp'] + v)
-                    print(f"HP Restored. Hole created: {size} bytes.")
+                    print(f"{Colors.GREEN}HP Restored. Hole created: {size} bytes.{Colors.END}")
                 elif item['type'] == "buff":
                     self.player[item['stat']] += item['value']
                     if 'dr' in item: self.player['dr'] += item['dr']
                     if item['stat'] == "max_hp": self.player['hp'] += item['value']
                     if item['stat'] == "xp": self.player['xp'] += item['value']
                     if 'atk' in item and item['stat'] != 'atk': self.player['atk'] += item['atk']
-                    print(f"Applied {item['name']}. Hole created: {size} bytes.")
+                    print(f"{Colors.YELLOW}Applied {item['name']}. Hole created: {size} bytes.{Colors.END}")
                 elif item['type'] == "key": self.player['keys'] += 1
                 self.save_player(self.player); return
         print("Item not found.")
@@ -211,7 +211,7 @@ class DelveEngine:
             "mob_filename": mob_filename, "multiplier": 1.0, "active": True
         }
         with open(COMBAT_FILE, "w") as f: json.dump(state, f, indent=4)
-        print(f"--- I.P. COMBAT INITIALIZED: {mob['name']} ---")
+        print(f"{Colors.BOLD}{Colors.CYAN}--- I.P. COMBAT INITIALIZED: {mob['name']} ---{Colors.END}")
         print("Queue Opcode: --op <MOV|NOP|ADD|XOR|LOCK>")
 
     def combat_turn(self, opcode):
@@ -283,7 +283,7 @@ class DelveEngine:
                 print(f"{Colors.PURPLE}{Colors.BOLD}>> CORE BREACH SUCCESSFUL: THE LABYRINTH IS CONQUERED <<{Colors.END}")
                 print("="*40 + "\n")
                 self.globals['total_xp'] += p['xp']; self.save_global()
-                if os.path.exists(PLAYER_FILE): os.remove(PLAYER_FILE)
+                self.wipe_traces()
                 sys.exit()
             if random.random() < 0.25:
                 p['keys'] += 1; print(f"{Colors.GREEN}>> DATA LEAK: Found 1 Sector Key in the wreckage.{Colors.END}")
@@ -407,7 +407,7 @@ class DelveEngine:
         self.player['path_history'].append(self.player['room_path'])
         self.player['room_path'] = f"room_{hashlib.md5((self.player['room_path']+door_f).encode()).hexdigest()[:6]}"
         self.player['depth'] += 1; self.generate_room(self.player['room_path'], dt); self.save_player(self.player)
-        print(f"Depth {self.player['depth']} reached.")
+        print(f"{Colors.BOLD}{Colors.PURPLE}Depth {self.player['depth']} reached.{Colors.END}")
 
     def backtrack(self):
         if not self.player['path_history']: return
@@ -417,28 +417,48 @@ class DelveEngine:
     def sell_key(self):
         if self.player['keys'] > 0:
             self.player['keys'] -= 1; self.player['xp'] += 50
-            print("Key -> 50 XP."); self.save_player(self.player)
+            print(f"{Colors.YELLOW}Key -> 50 XP.{Colors.END}"); self.save_player(self.player)
 
     def buy_key(self):
         if self.player['xp'] >= 100:
             self.player['xp'] -= 100; self.player['keys'] += 1
-            print("100 XP -> Key."); self.save_player(self.player)
-        else: print("Need 100 XP.")
+            print(f"{Colors.YELLOW}100 XP -> Key.{Colors.END}"); self.save_player(self.player)
+        else: print(f"{Colors.RED}Need 100 XP.{Colors.END}")
+
+    def wipe_traces(self):
+        print(f"{Colors.CYAN}>> INITIALIZING FILESYSTEM PURGE...{Colors.END}")
+        for item in os.listdir(GAME_DIR):
+            item_path = os.path.join(GAME_DIR, item)
+            # Remove all room directories and the 'start' directory contents
+            if os.path.isdir(item_path) and (item.startswith("room_") or item == "start"):
+                import shutil
+                if item == "start":
+                    # Keep the directory but clear contents (mobs/items/doors)
+                    for sub in os.listdir(item_path):
+                        sub_p = os.path.join(item_path, sub)
+                        if os.path.isdir(sub_p): shutil.rmtree(sub_p)
+                        else: os.remove(sub_p)
+                else:
+                    shutil.rmtree(item_path)
+        
+        # Remove volatile state files
+        for f in [PLAYER_FILE, COMBAT_FILE, BOSS_FILE]:
+            if os.path.exists(f): os.remove(f)
+        print(f"{Colors.CYAN}>> FILESYSTEM PURGED. NO TRACES REMAIN.{Colors.END}")
 
     def terminate(self):
-        print("RUN TERMINATED."); self.globals['total_xp'] += self.player['xp']; self.save_global()
-        if self.player['depth'] > 0 and os.path.exists(PLAYER_FILE): os.remove(PLAYER_FILE)
-        if os.path.exists(COMBAT_FILE): os.remove(COMBAT_FILE)
+        print(f"{Colors.RED}{Colors.BOLD}RUN TERMINATED.{Colors.END}"); self.globals['total_xp'] += self.player['xp']; self.save_global()
+        self.wipe_traces()
         sys.exit()
 
     def upgrade(self, stat):
         cost = 200
         if self.globals['total_xp'] >= cost:
             self.globals['total_xp'] -= cost
-            if stat == "hp": self.globals['base_hp'] += 10; print("Base HP Up!")
-            elif stat == "atk": self.globals['base_atk'] += 2; print("Base ATK Up!")
+            if stat == "hp": self.globals['base_hp'] += 10; print(f"{Colors.GREEN}Base HP Up!{Colors.END}")
+            elif stat == "atk": self.globals['base_atk'] += 2; print(f"{Colors.YELLOW}Base ATK Up!{Colors.END}")
             self.save_global()
-        else: print("Need 200 Global XP.")
+        else: print(f"{Colors.RED}Need 200 Global XP.{Colors.END}")
 
     def show_status(self):
         p = self.player

@@ -1,4 +1,0 @@
---- SECTOR ROOM_D4FEDC ---
-DEPTH: 4 | LVL: 1 | CLASS: Novice
-A pulsing data stream promising POWER.
-Status: Awaiting input...

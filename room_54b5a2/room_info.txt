@@ -1,4 +1,0 @@
---- SECTOR ROOM_54B5A2 ---
-DEPTH: 20
-A quiet, well-lit corridor.
-Status: Awaiting input...

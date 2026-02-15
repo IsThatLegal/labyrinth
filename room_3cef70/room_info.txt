@@ -1,4 +1,0 @@
---- SECTOR ROOM_3CEF70 ---
-DEPTH: 10 | LVL: 2 | CLASS: Novice
-A pulsing data stream promising POWER.
-Status: Awaiting input...

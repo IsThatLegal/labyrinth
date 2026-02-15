@@ -1,4 +1,0 @@
---- SECTOR ROOM_4D344E ---
-DEPTH: 90 | LVL: 6 | CORR: 0%
-A quiet, well-lit corridor.
-Status: Awaiting input...

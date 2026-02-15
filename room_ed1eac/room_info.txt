@@ -1,4 +1,0 @@
---- SECTOR ROOM_ED1EAC ---
-DEPTH: 56 | LVL: 5 | CORR: 0%
-A vibrating passage filled with static.
-Status: Awaiting input...

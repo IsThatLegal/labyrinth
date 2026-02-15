@@ -1,4 +1,0 @@
---- SECTOR ROOM_2CB9F3 ---
-DEPTH: 17 | LVL: 4 | CLASS: Novice
-A pulsing data stream promising POWER.
-Status: Awaiting input...

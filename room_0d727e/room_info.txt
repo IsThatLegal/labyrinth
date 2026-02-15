@@ -1,4 +1,0 @@
---- SECTOR ROOM_0D727E ---
-DEPTH: 26 | LVL: 4 | CLASS: SysAdmin (Tank)
-A pulsing data stream promising POWER.
-Status: Awaiting input...

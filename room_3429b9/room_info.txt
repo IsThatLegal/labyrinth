@@ -1,4 +1,0 @@
---- SECTOR ROOM_3429B9 ---
-DEPTH: 49 | LVL: 7 | CLASS: SysAdmin (Tank)
-A heavily reinforced blast door promising DEFENSE.
-Status: Awaiting input...

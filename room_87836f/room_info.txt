@@ -1,4 +1,0 @@
---- SECTOR ROOM_87836F ---
-DEPTH: 71 | CORRUPTION: 55%
-A quiet, well-lit corridor.
-Status: Awaiting input...

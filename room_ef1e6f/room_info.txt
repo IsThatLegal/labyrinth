@@ -1,5 +1,0 @@
---- SECTOR ROOM_EF1E6F ---
-DEPTH: 31
-A vibrating passage filled with static.
-ALARM: Unauthorized access detected. System resistance increasing.
-Status: Awaiting input...

@@ -1,4 +1,0 @@
---- SECTOR ROOM_BE3E18 ---
-DEPTH: 9
-A quiet, well-lit corridor.
-Status: Awaiting input...

@@ -1,4 +1,0 @@
---- SECTOR ROOM_D81114 ---
-DEPTH: 41 | LVL: 4 | CORR: 0%
-A quiet, well-lit corridor.
-Status: Awaiting input...

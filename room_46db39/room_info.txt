@@ -1,4 +1,0 @@
---- SECTOR ROOM_46DB39 ---
-DEPTH: 31 | LVL: 2 | CORR: 0%
-A quiet, well-lit corridor.
-Status: Awaiting input...

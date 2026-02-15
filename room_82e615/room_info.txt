@@ -1,4 +1,0 @@
---- SECTOR ROOM_82E615 ---
-DEPTH: 15 | LVL: 3 | CLASS: SysAdmin (Tank)
-A heavily reinforced blast door promising DEFENSE.
-Status: Awaiting input...

@@ -1,4 +1,0 @@
---- SECTOR ROOM_BB312F ---
-DEPTH: 18 | LVL: 3 | CORR: 0%
-A quiet, well-lit corridor.
-Status: Awaiting input...

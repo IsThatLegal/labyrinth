@@ -1,4 +1,0 @@
---- SECTOR ROOM_3AA407 ---
-DEPTH: 6
-A vibrating passage filled with static.
-Status: Awaiting input...

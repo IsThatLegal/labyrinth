@@ -1,4 +1,0 @@
---- SECTOR ROOM_FC6A5B ---
-DEPTH: 14 | LVL: 3 | CLASS: Novice
-A pulsing data stream promising POWER.
-Status: Awaiting input...

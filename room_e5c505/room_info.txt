@@ -1,4 +1,0 @@
---- ROOM ROOM_E5C505 ---
-DEPTH: 3
-You are standing in a flicker-lit sector of the labyrinth.
-The walls are made of cold, humming server racks.

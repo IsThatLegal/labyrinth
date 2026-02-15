@@ -1,4 +1,0 @@
---- SECTOR ROOM_142F60 ---
-DEPTH: 16
-A flickering doorway that defies geometry.
-Status: Awaiting input...

@@ -1,4 +1,0 @@
---- SECTOR ROOM_63A26B ---
-DEPTH: 48 | LVL: 7 | CLASS: SysAdmin (Tank)
-A heavily reinforced blast door promising DEFENSE.
-Status: Awaiting input...

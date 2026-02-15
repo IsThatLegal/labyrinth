@@ -1,5 +1,0 @@
---- SECTOR ROOM_DF26B2 ---
-DEPTH: 40
-A quiet, well-lit corridor.
-ALARM: Unauthorized access detected. System resistance increasing.
-Status: Awaiting input...

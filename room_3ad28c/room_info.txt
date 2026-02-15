@@ -1,4 +1,0 @@
---- SECTOR ROOM_3AD28C ---
-DEPTH: 84 | LVL: 6 | CORR: 0%
-A quiet, well-lit corridor.
-Status: Awaiting input...

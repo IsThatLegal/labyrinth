@@ -1,5 +1,0 @@
---- SECTOR ROOM_2CCE7C ---
-DEPTH: 10 | CORRUPTION: 40%
-A quiet, well-lit corridor.
-SECURE PROTOCOL DETECTED: This sector is locked. Sector Key required.
-Status: Awaiting input...

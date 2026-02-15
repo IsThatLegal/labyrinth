@@ -1,4 +1,0 @@
---- SECTOR ROOM_5DC717 ---
-DEPTH: 49 | CORRUPTION: 30%
-A vibrating passage filled with static.
-Status: Awaiting input...

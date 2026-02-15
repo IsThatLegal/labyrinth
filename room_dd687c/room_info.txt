@@ -1,4 +1,0 @@
---- SECTOR ROOM_DD687C ---
-DEPTH: 26 | LVL: 2 | CORR: 0%
-A quiet, well-lit corridor.
-Status: Awaiting input...

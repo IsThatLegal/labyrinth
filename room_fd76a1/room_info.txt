@@ -1,4 +1,0 @@
---- SECTOR ROOM_FD76A1 ---
-DEPTH: 22 | LVL: 4 | CLASS: SysAdmin (Tank)
-A heavily reinforced blast door promising DEFENSE.
-Status: Awaiting input...

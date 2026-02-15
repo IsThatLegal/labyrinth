@@ -1,9 +1,0 @@
-{
-    "name": "[BOSS] Garbage Collector",
-    "hp": 239,
-    "atk": 19,
-    "xp": 640,
-    "traits": [
-        "drain"
-    ]
-}

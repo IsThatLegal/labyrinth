@@ -1,4 +1,0 @@
---- SECTOR ROOM_572E84 ---
-DEPTH: 75 | LVL: 6 | CORR: 0%
-A flickering doorway that defies geometry.
-Status: Awaiting input...

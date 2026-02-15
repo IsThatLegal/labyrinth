@@ -1,4 +1,0 @@
---- SECTOR ROOM_165E34 ---
-DEPTH: 40 | LVL: 4 | CORR: 0%
-A vibrating passage filled with static.
-Status: Awaiting input...

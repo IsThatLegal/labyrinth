@@ -1,4 +1,0 @@
---- SECTOR ROOM_469A4B ---
-DEPTH: 33 | CORRUPTION: 5%
-A quiet, well-lit corridor.
-Status: Awaiting input...

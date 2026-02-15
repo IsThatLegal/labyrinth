@@ -1,4 +1,0 @@
---- SECTOR ROOM_F63DF2 ---
-DEPTH: 24
-A quiet, well-lit corridor.
-Status: Awaiting input...

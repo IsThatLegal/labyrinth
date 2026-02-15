@@ -1,4 +1,0 @@
---- SECTOR ROOM_24DB8D ---
-DEPTH: 30 | CORRUPTION: 0%
-A flickering doorway that defies geometry.
-Status: Awaiting input...

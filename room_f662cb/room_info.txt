@@ -1,4 +1,0 @@
---- SECTOR ROOM_F662CB ---
-DEPTH: 24 | CORRUPTION: 0%
-A vibrating passage filled with static.
-Status: Awaiting input...

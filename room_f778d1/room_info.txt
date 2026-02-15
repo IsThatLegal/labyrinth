@@ -1,4 +1,0 @@
---- SECTOR ROOM_F778D1 ---
-DEPTH: 27 | LVL: 4 | CLASS: SysAdmin (Tank)
-A glitching, unstable rift promising AGILITY.
-Status: Awaiting input...

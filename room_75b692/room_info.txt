@@ -1,5 +1,0 @@
---- SECTOR ROOM_75B692 ---
-DEPTH: 32
-A quiet, well-lit corridor.
-ALARM: Unauthorized access detected. System resistance increasing.
-Status: Awaiting input...

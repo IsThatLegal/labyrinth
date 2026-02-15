@@ -1,4 +1,0 @@
---- SECTOR ROOM_38BEF1 ---
-DEPTH: 5 | LVL: 2 | CLASS: Novice
-A glitching, unstable rift promising AGILITY.
-Status: Awaiting input...

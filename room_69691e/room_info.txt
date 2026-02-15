@@ -1,4 +1,0 @@
---- SECTOR ROOM_69691E ---
-DEPTH: 7 | LVL: 2 | CLASS: Novice
-A heavily reinforced blast door promising DEFENSE.
-Status: Awaiting input...

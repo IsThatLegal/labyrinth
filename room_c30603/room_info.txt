@@ -1,4 +1,0 @@
---- SECTOR ROOM_C30603 ---
-DEPTH: 65 | CORRUPTION: 55%
-A vibrating passage filled with static.
-Status: Awaiting input...

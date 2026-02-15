@@ -1,4 +1,0 @@
---- SECTOR ROOM_2C8342 ---
-DEPTH: 64 | LVL: 5 | CORR: 0%
-A quiet, well-lit corridor.
-Status: Awaiting input...

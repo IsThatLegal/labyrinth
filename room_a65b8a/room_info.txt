@@ -1,5 +1,0 @@
---- SECTOR ROOM_A65B8A ---
-DEPTH: 33
-A vibrating passage filled with static.
-ALARM: Unauthorized access detected. System resistance increasing.
-Status: Awaiting input...

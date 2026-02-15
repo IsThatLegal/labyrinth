@@ -1,4 +1,0 @@
---- SECTOR ROOM_905C12 ---
-DEPTH: 19 | LVL: 3 | CLASS: SysAdmin (Tank)
-A pulsing data stream promising POWER.
-Status: Awaiting input...

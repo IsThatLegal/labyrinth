@@ -1,4 +1,0 @@
---- SECTOR ROOM_D4AD39 ---
-DEPTH: 81 | CORRUPTION: 100%
-A flickering doorway that defies geometry.
-Status: Awaiting input...

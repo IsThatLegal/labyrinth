@@ -1,4 +1,0 @@
---- SECTOR ROOM_5C4078 ---
-DEPTH: 8 | LVL: 2 | CLASS: Novice
-A glitching, unstable rift promising AGILITY.
-Status: Awaiting input...

@@ -1,5 +1,0 @@
---- SECTOR ROOM_CB65AF ---
-DEPTH: 30
-A quiet, well-lit corridor.
-ALARM: Unauthorized access detected. System resistance increasing.
-Status: Awaiting input...

@@ -1,4 +1,0 @@
---- SECTOR ROOM_CEC26D ---
-DEPTH: 15 | LVL: 3 | CORR: 0%
-A quiet, well-lit corridor.
-Status: Awaiting input...

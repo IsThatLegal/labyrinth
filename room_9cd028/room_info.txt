@@ -1,4 +1,0 @@
---- SECTOR ROOM_9CD028 ---
-DEPTH: 21 | LVL: 4 | CLASS: SysAdmin (Tank)
-A pulsing data stream promising POWER.
-Status: Awaiting input...

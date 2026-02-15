@@ -1,4 +1,0 @@
---- SECTOR ROOM_59F9C8 ---
-DEPTH: 5 | LVL: 1 | CORR: 0%
-A vibrating passage filled with static.
-Status: Awaiting input...

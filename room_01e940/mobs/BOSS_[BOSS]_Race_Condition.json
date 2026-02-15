@@ -1,9 +1,0 @@
-{
-    "name": "[BOSS] Race Condition",
-    "hp": 800,
-    "atk": 90,
-    "xp": 3000,
-    "traits": [
-        "multi_strike"
-    ]
-}

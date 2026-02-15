@@ -1,4 +1,0 @@
---- SECTOR ROOM_2D4E3D ---
-DEPTH: 17 | LVL: 3 | CLASS: SysAdmin (Tank)
-A glitching, unstable rift promising AGILITY.
-Status: Awaiting input...

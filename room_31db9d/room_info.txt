@@ -1,4 +1,0 @@
---- SECTOR ROOM_31DB9D ---
-DEPTH: 13
-A flickering doorway that defies geometry.
-Status: Awaiting input...

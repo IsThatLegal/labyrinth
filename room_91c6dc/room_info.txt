@@ -1,4 +1,0 @@
---- SECTOR ROOM_91C6DC ---
-DEPTH: 35 | LVL: 5 | CLASS: SysAdmin (Tank)
-A heavily reinforced blast door promising DEFENSE.
-Status: Awaiting input...

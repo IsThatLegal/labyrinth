@@ -1,4 +1,0 @@
---- SECTOR ROOM_2ACEBE ---
-DEPTH: 85 | CORRUPTION: 100%
-A quiet, well-lit corridor.
-Status: Awaiting input...

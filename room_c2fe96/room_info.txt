@@ -1,4 +1,0 @@
---- SECTOR ROOM_C2FE96 ---
-DEPTH: 30 | CORRUPTION: 15%
-A flickering doorway that defies geometry.
-Status: Awaiting input...

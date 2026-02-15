@@ -1,4 +1,0 @@
---- SECTOR ROOM_6512AB ---
-DEPTH: 4 | LVL: 1 | CLASS: Novice
-A glitching, unstable rift promising AGILITY.
-Status: Awaiting input...

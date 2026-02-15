@@ -1,4 +1,0 @@
---- SECTOR ROOM_4BF46F ---
-DEPTH: 29 | LVL: 5 | CLASS: SysAdmin (Tank)
-A pulsing data stream promising POWER.
-Status: Awaiting input...

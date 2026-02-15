@@ -1,4 +1,0 @@
---- SECTOR ROOM_642394 ---
-DEPTH: 33 | CORRUPTION: 80%
-A quiet, well-lit corridor.
-Status: Awaiting input...
