@@ -41,8 +41,8 @@ SPECIAL_MOBS = {
     0x50: {"name": "[BOSS] Purge Sentinel", "hp": 300, "atk": 25, "xp": 1000},
     0x60: {"name": "[BOSS] Memory Leak", "hp": 350, "atk": 30, "xp": 1200, "traits": ["lifesteal"]},
     0x70: {"name": "[BOSS] Race Condition", "hp": 400, "atk": 45, "xp": 1500, "traits": ["multi_strike", "race_condition"]},
-    0x80: {"name": "[BOSS] Null Pointer Overlord", "hp": 500, "atk": 50, "xp": 2000, "traits": ["true_dmg"]},
-    0x90: {"name": "[BOSS] Kernel Panic Archon", "hp": 600, "atk": 60, "xp": 3000, "traits": ["crit", "true_dmg"]},
+    0x80: {"name": "[BOSS] Null Pointer Overlord", "hp": 500, "atk": 50, "xp": 2000, "traits": ["unavoidable"]},
+    0x90: {"name": "[BOSS] Kernel Panic Archon", "hp": 600, "atk": 60, "xp": 3000, "traits": ["crit", "unavoidable"]},
     0xA0: {"name": "[BOSS] Key Devourer", "hp": 2000, "atk": 150, "xp": 10000, "traits": ["true_dmg", "drain", "race_condition"]},
 }
 ITEMS = {
@@ -51,12 +51,12 @@ ITEMS = {
     0x30: {"name": "Logic_Blade", "type": "buff", "stat": "atk", "value": 3, "size": 32, "desc": "+3 ATK (Root)"},
     0x31: {"name": "Compiler_Loop", "type": "buff", "stat": "xp", "value": 50, "size": 24, "desc": "+50 Instant XP (Root)"},
     0x32: {"name": "Syntax_Lens", "type": "buff", "stat": "crit", "value": 2, "size": 16, "desc": "+2% Crit (Root)"},
-    0x40: {"name": "Protocol_Shield", "type": "buff", "stat": "max_hp", "value": 15, "dr": 1, "size": 48, "desc": "+15 Max HP & 1 DR (Firewall)"},
-    0x41: {"name": "Heavy_Kernel", "type": "buff", "stat": "max_hp", "value": 30, "size": 64, "desc": "+30 Max HP (Firewall)"},
-    0x42: {"name": "Iron_Clad_Mesh", "type": "buff", "stat": "dr", "value": 2, "size": 80, "desc": "+2 DR (Firewall)"},
-    0x50: {"name": "Reflex_Buffer", "type": "buff", "stat": "dodge", "value": 5, "size": 24, "desc": "+5% Dodge (Exploit)"},
-    0x51: {"name": "Zero_Day_Shiv", "type": "buff", "stat": "crit", "value": 5, "size": 32, "desc": "+5% Crit (Exploit)"},
-    0x52: {"name": "Ghost_Protocol", "type": "buff", "stat": "dodge", "value": 3, "atk": 1, "size": 40, "desc": "+3% Dodge & +1 ATK (Exploit)"},
+    0x40: {"name": "Protocol_Shield", "type": "buff", "stat": "max_hp", "value": 10, "dodge": -1, "size": 48, "desc": "+10 Max HP & -1% Dodge (Firewall)"},
+    0x41: {"name": "Heavy_Kernel", "type": "buff", "stat": "max_hp", "value": 20, "dodge": -2, "size": 64, "desc": "+20 Max HP & -2% Dodge (Firewall)"},
+    0x42: {"name": "Iron_Clad_Mesh", "type": "buff", "stat": "dr", "value": 1, "dodge": -3, "size": 80, "desc": "+1 DR & -3% Dodge (Firewall)"},
+    0x50: {"name": "Reflex_Buffer", "type": "buff", "stat": "dodge", "value": 2, "size": 24, "desc": "+2% Dodge (Exploit)"},
+    0x51: {"name": "Zero_Day_Shiv", "type": "buff", "stat": "crit", "value": 3, "size": 32, "desc": "+3% Crit (Exploit)"},
+    0x52: {"name": "Ghost_Protocol", "type": "buff", "stat": "dodge", "value": 1, "atk": 1, "size": 40, "desc": "+1% Dodge & +1 ATK (Exploit)"},
 }
 DOOR_TYPES = {
     "ROOT": {"desc": "A pulsing data stream promising POWER.", "loot_table": [0x30, 0x31, 0x32]},
@@ -71,16 +71,17 @@ RARITIES = {
 }
 
 class DelveEngine:
-    def __init__(self, seed=WORLD_SEED):
-        self.seed = seed
-        self.globals = self.load_global()
+    def __init__(self, seed=None):
         self.player = self.load_player()
+        # Use existing run seed or default
+        self.seed = self.player.get('seed', WORLD_SEED)
+        self.globals = self.load_global()
         self.session = self.load_session()
 
     def load_global(self):
         if os.path.exists(GLOBAL_FILE):
             with open(GLOBAL_FILE, "r") as f: return json.load(f)
-        return {"total_xp": 0, "base_hp": 50, "base_atk": 5, "base_crit": 10, "base_dodge": 15}
+        return {"total_xp": 0, "base_hp": 50, "base_atk": 5, "base_crit": 10, "base_dodge": 15, "base_seed": WORLD_SEED}
 
     def save_global(self):
         with open(GLOBAL_FILE, "w") as f: json.dump(self.globals, f, indent=4)
@@ -92,12 +93,16 @@ class DelveEngine:
                 p.setdefault("dr", 0); p.setdefault("percent_dmg", 0); p.setdefault("shield_turns", 0)
                 p.setdefault("lvl", 1); p.setdefault("xp_to_lvl", 200); p.setdefault("path_history", [])
                 p.setdefault("class", "Novice"); p.setdefault("mem_capacity", 256); p.setdefault("mem_used", 0)
-                p.setdefault("fragmentation", 0); p.setdefault("symlinks", [])
+                p.setdefault("fragmentation", 0); p.setdefault("symlinks", []); p.setdefault("seed", WORLD_SEED)
                 return p
-        return self.reset_run()
+        # If no player file, we return a shell that reset_run will fill
+        return {"seed": WORLD_SEED}
 
     def reset_run(self):
+        # Generate a new unique seed for this run
+        new_seed = hashlib.md5(str(time.time()).encode()).hexdigest()[:10]
         new_p = {
+            "seed": new_seed,
             "hp": self.globals['base_hp'], "max_hp": self.globals['base_hp'],
             "atk": self.globals['base_atk'], "crit": self.globals['base_crit'],
             "dodge": self.globals['base_dodge'], "dr": 0, "percent_dmg": 0,
@@ -106,6 +111,8 @@ class DelveEngine:
             "backlog": [], "keys": 0, "path_history": [], "overclocked": False, "battles_won": 0,
             "class": "Novice", "mem_capacity": 256, "mem_used": 0, "fragmentation": 0, "symlinks": []
         }
+        self.seed = new_seed
+        self.player = new_p
         self.save_player(new_p)
         return new_p
 
@@ -125,8 +132,8 @@ class DelveEngine:
             self.player['xp'] -= self.player['xp_to_lvl']
             self.player['lvl'] += 1
             self.player['xp_to_lvl'] = int(self.player['xp_to_lvl'] * 1.5)
-            self.player['atk'] += 3; self.player['max_hp'] += 20; self.player['hp'] += 20
-            self.player['dodge'] = min(75, self.player['dodge'] + 2)
+            self.player['atk'] += 2; self.player['max_hp'] += 15; self.player['hp'] += 15
+            self.player['dodge'] = min(75, self.player['dodge'] + 1)
             p = self.player
             if p['dr'] >= 5 or p['max_hp'] > 200: p['class'] = "SysAdmin (Tank)"
             elif p['dodge'] > 40 or p['crit'] > 25: p['class'] = "Ghost (Rogue)"
@@ -193,6 +200,7 @@ class DelveEngine:
                 elif item['type'] == "buff":
                     self.player[item['stat']] += item['value']
                     if 'dr' in item: self.player['dr'] += item['dr']
+                    if 'dodge' in item: self.player['dodge'] = max(0, min(75, self.player['dodge'] + item['dodge']))
                     if item['stat'] == "max_hp": self.player['hp'] += item['value']
                     if item['stat'] == "xp": self.player['xp'] += item['value']
                     if 'atk' in item and item['stat'] != 'atk': self.player['atk'] += item['atk']
@@ -221,6 +229,7 @@ class DelveEngine:
         if not c['active']: return
         
         c.setdefault('lock_turns', 0)
+        c.setdefault('temp_dr', 0)
         
         # Player Turn
         print(f">> IP: Executing {opcode}...")
@@ -233,9 +242,9 @@ class DelveEngine:
         elif opcode == "NOP":
             c['multiplier'] *= 2.0; print("Result: CPU Cycle skipped. Next MOV doubled.")
         elif opcode == "ADD":
-            p['atk'] += 2; print(f"Result: {Colors.YELLOW}ATK permanently increased by 2{Colors.END} for this fight.")
+            p['atk'] += 4; print(f"Result: {Colors.YELLOW}ATK permanently increased by 4{Colors.END} for this fight.")
         elif opcode == "XOR":
-            p['dr'] += 10; print(f"Result: {Colors.CYAN}Temporary encryption active. +10 DR and Reflective Shell engaged.{Colors.END}")
+            c['temp_dr'] = 10; print(f"Result: {Colors.CYAN}Temporary encryption active. +10 DR and Reflective Shell engaged.{Colors.END}")
         elif opcode == "LOCK":
             if p['keys'] > 0:
                 p['keys'] -= 1; c['lock_turns'] = 3
@@ -266,8 +275,17 @@ class DelveEngine:
                         fb_dmg = 10
                     
                     if fb_dmg > 0:
-                        if random.random() < (p['dodge'] / 100.0):
+                        # Saturation Density: Fallout becomes harder to dodge as the boss gets full
+                        # Key Devourer EMP: Chance to disable Ghosting for this turn
+                        if random.random() < 0.25:
+                            print(f"{Colors.RED}>> EMP: Ghost Protocol disabled by digital shockwave!{Colors.END}")
+                            effective_dodge = 0
+                        else:
+                            effective_dodge = p['dodge'] - c['keys_fed']
+                        
+                        if random.random() < (effective_dodge / 100.0):
                             print(f"{Colors.CYAN}>> AVOIDED: You dodged the digital fallout!{Colors.END}")
+                            p['corruption'] += 1; p['fragmentation'] += 10
                         else:
                             p['hp'] -= fb_dmg
                             print(f"{Colors.RED}>> FEEDBACK: You took {fb_dmg} damage from the boss's reaction! ({p['hp']}/{p['max_hp']} HP){Colors.END}")
@@ -298,12 +316,46 @@ class DelveEngine:
             print(f"{Colors.CYAN}>> STUNNED: Key Devourer is busy eating! ({c['lock_turns']} turns left){Colors.END}")
             c['lock_turns'] -= 1
             hit = False
-        elif "true_dmg" not in c['mob_traits']:
-            if random.random() < (p['dodge'] / 100.0): print(f"{Colors.CYAN}EVADED!{Colors.END}"); hit = False
-        else: print(f"{Colors.RED}UNAVOIDABLE!{Colors.END}")
+        elif True: # All attacks now follow the same logic with different tracking bonuses
+            # Predictive Tracking & Evasion Fatigue
+            c.setdefault('evasion_penalty', 0)
+            c.setdefault('tracking_bonus', 0)
+            
+            boss_tracking = 0
+            if "unavoidable" in c['mob_traits']: 
+                print(f"{Colors.RED}HIGH ACCURACY!{Colors.END}")
+                boss_tracking = 40
+            elif "true_dmg" in c['mob_traits']: 
+                boss_tracking = 15
+
+            effective_dodge = max(0, p['dodge'] - c['evasion_penalty'] - c['tracking_bonus'] - boss_tracking)
+            
+            if random.random() < (effective_dodge / 100.0): 
+                print(f"{Colors.CYAN}EVADED!{Colors.END}")
+                p['corruption'] += 1; p['fragmentation'] += 10
+                c['evasion_penalty'] += 5 
+                c['tracking_bonus'] += 20 # Aggressive Tracking
+                
+                # Static Friction: Minimal chip damage on dodge
+                chip_dmg = max(1, int(c['mob_atk'] * 0.10))
+                p['hp'] -= chip_dmg
+                print(f"{Colors.YELLOW}>> STATIC FRICTION: Evasion generated {chip_dmg} True Damage. ({p['hp']}/{self.player['max_hp']} HP){Colors.END}")
+                hit = False
+            else:
+                c['tracking_bonus'] = 0 # Reset tracking on successful hit
+                hit = True
         
         if hit:
-            dmg = max(1, c['mob_atk'] - p['dr'])
+            effective_dr = p['dr'] + c.get('temp_dr', 0)
+            variance = random.uniform(0.85, 1.15)
+            
+            if "true_dmg" in c['mob_traits']:
+                # True Damage now means high penetration (ignores 75% of DR)
+                dmg = max(1, int((c['mob_atk'] * variance) - (effective_dr * 0.25)))
+                print(f"{Colors.RED}PENETRATION!{Colors.END}")
+            else:
+                dmg = max(1, int((c['mob_atk'] * variance) - effective_dr))
+                
             if c.get('lock_turns', 0) > 0:
                 dmg //= 2; c['lock_turns'] -= 1; print(f"{Colors.CYAN}>> THROTTLED: Kernel Lock active ({c['lock_turns']} turns left){Colors.END}")
             
@@ -316,7 +368,7 @@ class DelveEngine:
             
             p['hp'] -= dmg; print(f"Took {Colors.RED}{dmg} DMG{Colors.END} ({p['hp']}/{p['max_hp']} HP)")
             if opcode == "XOR":
-                reflect = dmg // 2; c['mob_hp'] -= reflect; p['dr'] -= 10
+                reflect = dmg // 4; c['mob_hp'] -= reflect; c['temp_dr'] = 0 # Reset temp bonus
                 print(f"{Colors.GREEN}>> REFLECTED: {reflect} DMG returned to {c['mob_name']}.{Colors.END}")
 
         if p['hp'] <= 0: self.terminate()
@@ -457,12 +509,21 @@ class DelveEngine:
             self.globals['total_xp'] -= cost
             if stat == "hp": self.globals['base_hp'] += 10; print(f"{Colors.GREEN}Base HP Up!{Colors.END}")
             elif stat == "atk": self.globals['base_atk'] += 2; print(f"{Colors.YELLOW}Base ATK Up!{Colors.END}")
+            elif stat == "dodge": self.globals['base_dodge'] = min(75, self.globals['base_dodge'] + 1); print(f"{Colors.CYAN}Base Dodge Up!{Colors.END}")
+            elif stat == "crit": self.globals['base_crit'] += 1; print(f"{Colors.PURPLE}Base Crit Up!{Colors.END}")
             self.save_global()
         else: print(f"{Colors.RED}Need 200 Global XP.{Colors.END}")
 
     def show_status(self):
         p = self.player
+        if 'depth' not in p:
+            print(f"\n{Colors.BOLD}--- NO ACTIVE RUN ---{Colors.END}")
+            print(f"GLOBAL XP: {Colors.YELLOW}{self.globals['total_xp']}{Colors.END} | BASE: {self.globals['base_hp']}HP/{self.globals['base_atk']}ATK/{self.globals['base_dodge']}%DODGE")
+            print(f"-------------------\n")
+            return
+
         print(f"\n{Colors.BOLD}--- RUN DEPTH {p['depth']} --- XP: {Colors.YELLOW}{p['xp']}{Colors.END} | LVL: {Colors.CYAN}{p['lvl']}{Colors.END} | CLASS: {Colors.PURPLE}{p['class']}{Colors.END}")
+        print(f"{Colors.BOLD}RUN SEED: {self.seed}{Colors.END}")
         
         hp_color = Colors.GREEN if p['hp'] > p['max_hp'] * 0.5 else Colors.RED
         print(f"HP: {hp_color}{p['hp']}/{p['max_hp']}{Colors.END} | ATK: {Colors.YELLOW}{p['atk']}{Colors.END} | DR: {p['dr']} | DODGE: {p['dodge']}% | CRIT: {p['crit']}%")
