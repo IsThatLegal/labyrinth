@@ -1,7 +1,8 @@
 {
-    "total_xp": 631557,
-    "base_hp": 4030,
-    "base_atk": 361,
-    "base_crit": 25,
-    "base_dodge": 65
+    "total_xp": 0,
+    "base_hp": 50,
+    "base_atk": 5,
+    "base_crit": 10,
+    "base_dodge": 15,
+    "base_seed": "GEMINI_V1"
 }

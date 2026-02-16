@@ -1,0 +1,7 @@
+{
+    "name": "Cache_Patch",
+    "type": "heal",
+    "value": 15,
+    "size": 16,
+    "desc": "Restores 15 HP"
+}
